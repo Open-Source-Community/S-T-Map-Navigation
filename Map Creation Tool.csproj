@@ -9,10 +9,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="res\" />
-    <Folder Include="src\Model\" />
-    <Folder Include="src\Controller\" />
-  </ItemGroup>
-
 </Project>

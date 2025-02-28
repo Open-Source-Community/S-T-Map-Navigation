@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\برمجة\\Backend\\Map Creation Tool\\Map Creation Tool.csproj": {}
+    "C:\\Users\\AnasElwkel\\Source\\Repos\\S-T-Map-Navigation\\Map Creation Tool.csproj": {}
   },
   "projects": {
-    "D:\\برمجة\\Backend\\Map Creation Tool\\Map Creation Tool.csproj": {
+    "C:\\Users\\AnasElwkel\\Source\\Repos\\S-T-Map-Navigation\\Map Creation Tool.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\برمجة\\Backend\\Map Creation Tool\\Map Creation Tool.csproj",
+        "projectUniqueName": "C:\\Users\\AnasElwkel\\Source\\Repos\\S-T-Map-Navigation\\Map Creation Tool.csproj",
         "projectName": "Map Creation Tool",
-        "projectPath": "D:\\برمجة\\Backend\\Map Creation Tool\\Map Creation Tool.csproj",
+        "projectPath": "C:\\Users\\AnasElwkel\\Source\\Repos\\S-T-Map-Navigation\\Map Creation Tool.csproj",
         "packagesPath": "C:\\Users\\AnasElwkel\\.nuget\\packages\\",
-        "outputPath": "D:\\برمجة\\Backend\\Map Creation Tool\\obj\\",
+        "outputPath": "C:\\Users\\AnasElwkel\\Source\\Repos\\S-T-Map-Navigation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
