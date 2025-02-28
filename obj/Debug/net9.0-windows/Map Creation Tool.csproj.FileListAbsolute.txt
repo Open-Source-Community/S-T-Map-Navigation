@@ -1,0 +1,16 @@
+D:\برمجة\Backend\Map Creation Tool\bin\Debug\net9.0-windows\Map Creation Tool.exe
+D:\برمجة\Backend\Map Creation Tool\bin\Debug\net9.0-windows\Map Creation Tool.deps.json
+D:\برمجة\Backend\Map Creation Tool\bin\Debug\net9.0-windows\Map Creation Tool.runtimeconfig.json
+D:\برمجة\Backend\Map Creation Tool\bin\Debug\net9.0-windows\Map Creation Tool.dll
+D:\برمجة\Backend\Map Creation Tool\bin\Debug\net9.0-windows\Map Creation Tool.pdb
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\Map Creation Tool.csproj.GenerateResource.cache
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\Map Creation Tool.GeneratedMSBuildEditorConfig.editorconfig
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\Map Creation Tool.AssemblyInfoInputs.cache
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\Map Creation Tool.AssemblyInfo.cs
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\Map Creation Tool.csproj.CoreCompileInputs.cache
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\Map Creation Tool.dll
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\refint\Map Creation Tool.dll
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\Map Creation Tool.pdb
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\Map Creation Tool.genruntimeconfig.cache
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\ref\Map Creation Tool.dll
+D:\برمجة\Backend\Map Creation Tool\obj\Debug\net9.0-windows\Map_Creation_Tool.OpenForm.resources
