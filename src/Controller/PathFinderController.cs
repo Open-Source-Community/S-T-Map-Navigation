@@ -1,4 +1,5 @@
 ﻿using System;
+using Model;
 
 namespace Controller
 {
@@ -9,9 +10,28 @@ namespace Controller
 
     public class PathFinderController
     {
+        int fromX, fromY, toX, toY;
+
         public PathFinderController()
         {
-      
+                
+        }
+
+        public void validatePoints()
+        {
+            //take the input from view
+            //validate the input
+        }
+
+        public void callPathFinder()
+        {
+            Point fromPoint = new(fromX, fromY);
+            Point toPoint = new(toX, toY);
+            
+            PathFinder finder = new(fromPoint , toPoint);
+
+            finder.findPath();
+            finder.showPath();
         }
     }
 }
