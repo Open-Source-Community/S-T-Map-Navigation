@@ -1,7 +1,7 @@
-﻿using System;
-using Model;
+﻿//using System;
+using Map_Creation_Tool.src.Model;
 
-namespace Controller
+namespace Map_Creation_Tool.src.Controller
 {
     /* Take the from , to points and traffic option from view
      * validate the input
@@ -25,13 +25,14 @@ namespace Controller
 
         public void callPathFinder()
         {
-            Point fromPoint = new(fromX, fromY);
-            Point toPoint = new(toX, toY);
+            XY_Point fromPoint = new(fromX, fromY);
+            XY_Point toPoint = new(toX, toY);
             
             PathFinder finder = new(fromPoint , toPoint);
 
             finder.findPath();
             finder.showPath();
         }
+
     }
 }

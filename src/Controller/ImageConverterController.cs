@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Controller
+namespace Map_Creation_Tool.src.Controller
 {
     /* Get map image from view
 	 * check if the image is valid

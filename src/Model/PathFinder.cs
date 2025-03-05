@@ -1,14 +1,14 @@
 ﻿using System;
-namespace Model
+namespace Map_Creation_Tool.src.Model
 {
     /* Generate the shortest path between two points based on user option
      * show the path in the view
 	 */
     public class PathFinder
 	{
-        private Point fromPoint, toPoint;
-        ArrayList<Point> path;
-        public PathFinder(Point fromPoint , Point toPoint)
+        private XY_Point fromPoint, toPoint;
+        List<XY_Point> path;
+        public PathFinder(XY_Point fromPoint , XY_Point toPoint)
 		{
             this.fromPoint = fromPoint;
             this.toPoint = toPoint;

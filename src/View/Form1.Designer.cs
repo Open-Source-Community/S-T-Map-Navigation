@@ -1,4 +1,4 @@
-﻿namespace Map_Creation_Tool
+﻿namespace Map_Creation_Tool.src.View
 {
     partial class OpenForm
     {

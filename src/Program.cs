@@ -1,3 +1,6 @@
+using System;
+using System.Windows.Forms;
+using Map_Creation_Tool.src.View; 
 namespace Map_Creation_Tool.src
 {
     internal static class Program

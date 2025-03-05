@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model
+namespace Map_Creation_Tool.src.Model
 {
     public struct Cell
     {
