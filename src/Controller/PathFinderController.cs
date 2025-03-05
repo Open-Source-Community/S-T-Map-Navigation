@@ -1,4 +1,4 @@
-﻿//using System;
+﻿using System;
 using Map_Creation_Tool.src.Model;
 
 namespace Map_Creation_Tool.src.Controller
@@ -25,6 +25,7 @@ namespace Map_Creation_Tool.src.Controller
 
         public void callPathFinder()
         {
+            
             XY_Point fromPoint = new(fromX, fromY);
             XY_Point toPoint = new(toX, toY);
             
