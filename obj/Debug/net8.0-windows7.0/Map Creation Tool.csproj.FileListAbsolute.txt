@@ -55,3 +55,4 @@ D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\refint\Map Creation Tool.d
 D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.pdb
 D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.genruntimeconfig.cache
 D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\ref\Map Creation Tool.dll
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map_Creation_Tool.Properties.Resources.resources

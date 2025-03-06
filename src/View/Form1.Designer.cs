@@ -28,29 +28,21 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			pictureBox1 = new PictureBox();
 			button1 = new Button();
 			label1 = new Label();
-			panel1 = new Panel();
+			pictureBox1 = new PictureBox();
+			tableLayoutPanel1 = new TableLayoutPanel();
 			((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-			panel1.SuspendLayout();
+			tableLayoutPanel1.SuspendLayout();
 			SuspendLayout();
-			// 
-			// pictureBox1
-			// 
-			pictureBox1.Location = new Point(31, 68);
-			pictureBox1.Name = "pictureBox1";
-			pictureBox1.Size = new Size(491, 265);
-			pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-			pictureBox1.TabIndex = 0;
-			pictureBox1.TabStop = false;
 			// 
 			// button1
 			// 
+			button1.Anchor = AnchorStyles.None;
 			button1.BackColor = SystemColors.HotTrack;
 			button1.FlatStyle = FlatStyle.Popup;
 			button1.ForeColor = SystemColors.Control;
-			button1.Location = new Point(226, 383);
+			button1.Location = new Point(266, 525);
 			button1.Name = "button1";
 			button1.Size = new Size(94, 29);
 			button1.TabIndex = 1;
@@ -60,25 +52,45 @@
 			// 
 			// label1
 			// 
+			label1.Anchor = AnchorStyles.None;
 			label1.AutoSize = true;
 			label1.ForeColor = SystemColors.WindowText;
-			label1.Location = new Point(252, 439);
+			label1.Location = new Point(301, 440);
 			label1.Name = "label1";
-			label1.Size = new Size(0, 20);
+			label1.Size = new Size(25, 20);
 			label1.TabIndex = 2;
+			label1.Text = "llll";
+			label1.Click += this.label1_Click;
 			// 
-			// panel1
+			// pictureBox1
 			// 
-			panel1.BackColor = SystemColors.GradientInactiveCaption;
-			panel1.Controls.Add(pictureBox1);
-			panel1.Controls.Add(label1);
-			panel1.Controls.Add(button1);
-			panel1.Dock = DockStyle.Left;
-			panel1.Location = new Point(0, 0);
-			panel1.Margin = new Padding(0);
-			panel1.Name = "panel1";
-			panel1.Size = new Size(568, 600);
-			panel1.TabIndex = 4;
+			pictureBox1.Location = new Point(3, 3);
+			pictureBox1.Name = "pictureBox1";
+			pictureBox1.Size = new Size(615, 402);
+			pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+			pictureBox1.TabIndex = 0;
+			pictureBox1.TabStop = false;
+			pictureBox1.Click += pictureBox1_Click;
+			// 
+			// tableLayoutPanel1
+			// 
+			tableLayoutPanel1.BackColor = SystemColors.GradientInactiveCaption;
+			tableLayoutPanel1.ColumnCount = 2;
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.4060135F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5939865F));
+			tableLayoutPanel1.Controls.Add(label1, 0, 1);
+			tableLayoutPanel1.Controls.Add(button1, 0, 2);
+			tableLayoutPanel1.Controls.Add(pictureBox1, 0, 0);
+			tableLayoutPanel1.Dock = DockStyle.Fill;
+			tableLayoutPanel1.Location = new Point(0, 0);
+			tableLayoutPanel1.Name = "tableLayoutPanel1";
+			tableLayoutPanel1.RowCount = 3;
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+			tableLayoutPanel1.Size = new Size(1006, 600);
+			tableLayoutPanel1.TabIndex = 3;
+			tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
 			// 
 			// OpenForm
 			// 
@@ -86,23 +98,23 @@
 			AutoScaleMode = AutoScaleMode.Font;
 			AutoSize = true;
 			ClientSize = new Size(1006, 600);
-			Controls.Add(panel1);
+			Controls.Add(tableLayoutPanel1);
 			Name = "OpenForm";
 			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Map Creation Tool";
 			WindowState = FormWindowState.Maximized;
 			Load += OpenForm_Load;
 			((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-			panel1.ResumeLayout(false);
-			panel1.PerformLayout();
+			tableLayoutPanel1.ResumeLayout(false);
+			tableLayoutPanel1.PerformLayout();
 			ResumeLayout(false);
 		}
 
 		#endregion
 
-		private PictureBox pictureBox1;
 		private Button button1;
 		private Label label1;
-		private Panel panel1;
+		private PictureBox pictureBox1;
+		private TableLayoutPanel tableLayoutPanel1;
 	}
 }
