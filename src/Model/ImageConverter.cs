@@ -10,7 +10,7 @@ namespace Map_Creation_Tool.src.Model
      * Set the grid and the image in database 
      * Show interactive map in view
      */
-		public class ImageConverter
+		public static class ImageConverter
 		{
 			private static readonly HashSet<Rgb> Allowedcolors = new HashSet<Rgb>
 		{
@@ -19,16 +19,16 @@ namespace Map_Creation_Tool.src.Model
             new Rgb(0,255,0) ,//regular path: green
             new Rgb(0,0,255) ,//busy path: blue
         };
-			public ImageConverter()
-			{
+		//public ImageConverter()
+		//{
 
-			}
-			public Mat loadImage(string filepath)
-			{
-				return CvInvoke.Imread(filepath, ImreadModes.Color);
-			}
+		//}
+		public static Mat loadImage(string filepath)
+		{
+			return CvInvoke.Imread(filepath, ImreadModes.Color);
+		}
 
-			public (bool, string) validateImage(Mat image)
+		public static (bool, string) validateImage(Mat image)
 			{
 				if (image == null || image.IsEmpty)
 					return (false, "Image not found");
@@ -59,7 +59,7 @@ namespace Map_Creation_Tool.src.Model
 				return (true, "Image meets the constraints");
 			}
 
-			public (List<List<Rgb>>, string) ConvertImageToGrid(Mat image)
+		public static (List<List<Rgb>>, string) ConvertImageToGrid(Mat image)
 			{
 				var (isValid, message) = validateImage(image);
 				if (!isValid)
@@ -82,7 +82,32 @@ namespace Map_Creation_Tool.src.Model
 
 			}
 
+		public static Mat GetMatFromSDImage(System.Drawing.Image image)
+		{
+			int stride = 0;
+			Bitmap bmp = new Bitmap(image);
 
-    }
+			System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height);
+			System.Drawing.Imaging.BitmapData bmpData = bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp.PixelFormat);
+
+			System.Drawing.Imaging.PixelFormat pf = bmp.PixelFormat;
+			if (pf == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
+			{
+				stride = bmp.Width * 4;
+			}
+			else
+			{
+				stride = bmp.Width * 3;
+			}
+
+			Image<Bgra, byte> cvImage = new Image<Bgra, byte>(bmp.Width, bmp.Height, stride, (IntPtr)bmpData.Scan0);
+
+			bmp.UnlockBits(bmpData);
+
+			return cvImage.Mat;
+		}
+
+
+	}
 }
 

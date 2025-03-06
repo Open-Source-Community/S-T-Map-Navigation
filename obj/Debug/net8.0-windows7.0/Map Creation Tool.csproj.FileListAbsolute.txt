@@ -1,0 +1,57 @@
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\Map Creation Tool.exe
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\Map Creation Tool.deps.json
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\Map Creation Tool.runtimeconfig.json
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\Map Creation Tool.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\Map Creation Tool.pdb
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\Emgu.CV.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\OpenCvSharp.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\System.IO.Pipelines.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\System.Text.Encodings.Web.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\System.Text.Json.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\cvextern.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\cvextern.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\libusb-1.0.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\opencv_videoio_ffmpeg4100_64.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\cvextern.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\libusb-1.0.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\opencv_videoio_ffmpeg4100.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\concrt140.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\msvcp140.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\msvcp140_1.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\msvcp140_2.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\msvcp140_atomic_wait.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\msvcp140_codecvt_ids.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\vcruntime140.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\vcruntime140_1.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\concrt140.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\msvcp140.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\msvcp140_1.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\msvcp140_2.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\msvcp140_atomic_wait.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\msvcp140_codecvt_ids.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\vcruntime140.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\vcruntime140_1.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\concrt140.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\msvcp140.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\msvcp140_1.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\msvcp140_2.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\msvcp140_atomic_wait.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\msvcp140_codecvt_ids.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\vcruntime140.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\OpenCvSharpExtern.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\OpenCvSharpExtern.dll
+D:\osc\S-T-Map-Navigation\bin\Debug\net8.0-windows7.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.csproj.AssemblyReference.cache
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map_Creation_Tool.src.View.OpenForm.resources
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.csproj.GenerateResource.cache
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.GeneratedMSBuildEditorConfig.editorconfig
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.AssemblyInfoInputs.cache
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.AssemblyInfo.cs
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.csproj.CoreCompileInputs.cache
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.sourcelink.json
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Crea.10789585.Up2Date
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.dll
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\refint\Map Creation Tool.dll
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.pdb
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\Map Creation Tool.genruntimeconfig.cache
+D:\osc\S-T-Map-Navigation\obj\Debug\net8.0-windows7.0\ref\Map Creation Tool.dll

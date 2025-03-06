@@ -20,28 +20,70 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            SuspendLayout();
-            // 
-            // OpenForm
-            // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1062, 673);
-            Name = "OpenForm";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Map Creation Tool";
-            WindowState = FormWindowState.Maximized;
-            ResumeLayout(false);
-        }
+		/// <summary>
+		///  Required method for Designer support - do not modify
+		///  the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
+			pictureBox1 = new PictureBox();
+			button1 = new Button();
+			label1 = new Label();
+			((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+			SuspendLayout();
+			// 
+			// pictureBox1
+			// 
+			pictureBox1.Location = new Point(38, 32);
+			pictureBox1.Name = "pictureBox1";
+			pictureBox1.Size = new Size(435, 239);
+			pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+			pictureBox1.TabIndex = 0;
+			pictureBox1.TabStop = false;
+			// 
+			// button1
+			// 
+			button1.Location = new Point(211, 315);
+			button1.Name = "button1";
+			button1.Size = new Size(94, 29);
+			button1.TabIndex = 1;
+			button1.Text = "load image";
+			button1.UseVisualStyleBackColor = true;
+			button1.Click += button1_Click;
+			// 
+			// label1
+			// 
+			label1.AutoSize = true;
+			label1.Location = new Point(235, 373);
+			label1.Name = "label1";
+			label1.Size = new Size(42, 20);
+			label1.TabIndex = 2;
+			label1.Text = "label";
+			
+			// 
+			// OpenForm
+			// 
+			AutoScaleDimensions = new SizeF(8F, 20F);
+			AutoScaleMode = AutoScaleMode.Font;
+			ClientSize = new Size(1062, 673);
+			Controls.Add(label1);
+			Controls.Add(button1);
+			Controls.Add(pictureBox1);
+			Name = "OpenForm";
+			StartPosition = FormStartPosition.CenterScreen;
+			Text = "Map Creation Tool";
+			WindowState = FormWindowState.Maximized;
+			((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+			ResumeLayout(false);
+			PerformLayout();
+		}
 
-        #endregion
-    }
+		#endregion
+
+		private PictureBox pictureBox1;
+		private Button button1;
+		private Label label1;
+	}
 }

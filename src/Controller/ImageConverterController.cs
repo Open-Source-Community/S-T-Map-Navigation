@@ -15,24 +15,24 @@ namespace Controller
 	 */
 	public class ImageConverterController
 	{
-		private Map_Creation_Tool.src.Model.ImageConverter _imageConverter;
+		//private Map_Creation_Tool.src.Model.ImageConverter _imageConverter;
 
-		public ImageConverterController()
-		{
-			_imageConverter = new Map_Creation_Tool.src.Model.ImageConverter();
-		}
-		public (List<List<Rgb>>, string) processImage(string filepath)
-		{
-			Mat image = _imageConverter.loadImage(filepath);
-			if (image.IsEmpty)
-				return (null, "Image not found");
-			var (grid, conversionMessage) = _imageConverter.ConvertImageToGrid(image);
+		//public ImageConverterController()
+		//{
+		//	_imageConverter = new Map_Creation_Tool.src.Model.ImageConverter();
+		//}
+		//public (List<List<Rgb>>, string) processImage(string filepath)
+		//{
+		//	Mat image = _imageConverter.loadImage(filepath);
+		//	if (image.IsEmpty)
+		//		return (null, "Image not found");
+		//	var (grid, conversionMessage) = _imageConverter.ConvertImageToGrid(image);
 
-			if (grid == null)
-				return (null, conversionMessage);
+		//	if (grid == null)
+		//		return (null, conversionMessage);
 
-			return (grid, "Image converted to grid");
-		}
+		//	return (grid, "Image converted to grid");
+		//}
 
 	}
 }

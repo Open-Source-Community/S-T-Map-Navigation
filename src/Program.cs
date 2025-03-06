@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
@@ -18,25 +19,26 @@ namespace Map_Creation_Tool.src
 			// see https://aka.ms/applicationconfiguration.
 
 			//ApplicationConfiguration.Initialize();
-			//Application.Run(new OpenForm());
+			Application.Run(new OpenForm());
+
 
 			// Load an image
-			using (Mat image = CvInvoke.Imread("path_to_your_image.jpg"))
-			{
-				if (image.IsEmpty)
-				{
-					Console.WriteLine("Could not load image!");
-					return;
-				}
+			//using (Mat image = CvInvoke.Imread("path_to_your_image.jpg"))
+			//{
+			//	if (image.IsEmpty)
+			//	{
+			//		Console.WriteLine("Could not load image!");
+			//		return;
+			//	}
 
-				// Display the image
-				CvInvoke.Imshow("Image Window", image);
-				CvInvoke.WaitKey(0);
-				CvInvoke.DestroyAllWindows();
+			//	// Display the image
+			//	CvInvoke.Imshow("Image Window", image);
+			//	CvInvoke.WaitKey(0);
+			//	CvInvoke.DestroyAllWindows();
 
 
 
-			}
+			//}
 		}
 	}
 }
