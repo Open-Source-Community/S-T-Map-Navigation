@@ -39,7 +39,6 @@ namespace Map_Creation_Tool.src.Model
 				Image<Rgb, byte> img = rgbImage.ToImage<Rgb, byte>();
 				//to allow pixel manipulation
 
-
 				bool hasSource = false; //if there at least one red pixel (255,0,0) exists which represents the source
 				for (int y = 0; y < img.Height; y++)
 				{
@@ -49,9 +48,9 @@ namespace Map_Creation_Tool.src.Model
 
 						if (pixelColor.Equals(new Rgb(255, 0, 0)))
 							hasSource = true;
-						if (!Allowedcolors.Contains(pixelColor))
-							return (false, "Image contains invalid colors");
-					}
+					if (!Allowedcolors.Contains(pixelColor))
+						return (false, "Image contains invalid colors");
+				}
 				}
 				if (!hasSource)
 					return (false, "Image does not contain a source");
@@ -64,11 +63,18 @@ namespace Map_Creation_Tool.src.Model
 				var (isValid, message) = validateImage(image);
 				if (!isValid)
 					return (null, message);
+
 				List<List<Rgb>> grid = new List<List<Rgb>>();
 				//empty list called grid store each row of pixels as a list of rgb values
+
 				Mat rgbImage = new Mat();
+
+				//OpenCV stores images in BGR format by default. The method converts the image to RGB
 				CvInvoke.CvtColor(image, rgbImage, ColorConversion.Bgr2Rgb);
-				Image<Rgb, byte> img = rgbImage.ToImage<Rgb, byte>();
+			
+				Image<Rgb, byte> img = rgbImage.ToImage<Rgb, byte>();//For pixel level access
+
+			    //GRID CREATION
 				for (int y = 0; y < img.Height; y++)
 				{
 					List<Rgb> row = new List<Rgb>();

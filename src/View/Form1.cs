@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using static System.Net.Mime.MediaTypeNames;
 namespace Map_Creation_Tool.src.View
 {
 	public partial class OpenForm : Form
@@ -30,10 +31,9 @@ namespace Map_Creation_Tool.src.View
 						// Load the selected image into the PictureBox
 						pictureBox1.Image = new Bitmap(openFileDialog.FileName);
 
-						// Process the image using ImageConverter class
-						Mat matFromImage = Model.ImageConverter.GetMatFromSDImage(pictureBox1.Image);
-						(List<List<Rgb>> list, string str) = Model.ImageConverter.ConvertImageToGrid(matFromImage);
-						label1.Text = str;
+						//send image to controller to process
+						var (grid, conversionMessage) = Controller.ImageConverterController.processImage(pictureBox1.Image);
+						label1.Text = conversionMessage;
 
 
 					}
@@ -46,6 +46,9 @@ namespace Map_Creation_Tool.src.View
 			}
 		}
 
-		
+		private void OpenForm_Load(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

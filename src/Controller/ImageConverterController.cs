@@ -2,11 +2,12 @@
 using Emgu.CV.Structure;                            
 using System;
 using Emgu.CV;
-using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
-using Map_Creation_Tool.src.Model;
+using Map_Creation_Tool.src;
+using System.Windows.Forms;
 
-namespace Controller
+
+namespace Map_Creation_Tool.src.Controller
 {
 	/* Get map image from view
 	 * check if the image is valid
@@ -21,18 +22,27 @@ namespace Controller
 		//{
 		//	_imageConverter = new Map_Creation_Tool.src.Model.ImageConverter();
 		//}
-		//public (List<List<Rgb>>, string) processImage(string filepath)
-		//{
-		//	Mat image = _imageConverter.loadImage(filepath);
-		//	if (image.IsEmpty)
-		//		return (null, "Image not found");
-		//	var (grid, conversionMessage) = _imageConverter.ConvertImageToGrid(image);
+		public static (List<List<Rgb>>?, string) processImage(System.Drawing.Image image)
+		{
+			try
+			{
+				if (image == null)
+					return (null, "Image not found");
 
-		//	if (grid == null)
-		//		return (null, conversionMessage);
+				// Process the image using ImageConverter class
+				Mat matFromImage = Map_Creation_Tool.src.Model.ImageConverter.GetMatFromSDImage(image);
+				var (grid, conversionMessage) = Map_Creation_Tool.src.Model.ImageConverter.ConvertImageToGrid(matFromImage);
 
-		//	return (grid, "Image converted to grid");
-		//}
+				if (grid == null)
+					return (null, conversionMessage);
+
+				return (grid, "Image converted to grid");
+			}catch(Exception ex)
+			{
+				return (null, "exception"); ;
+			}
+			
+		}
 
 	}
 }
