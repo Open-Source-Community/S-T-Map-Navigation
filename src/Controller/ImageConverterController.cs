@@ -22,7 +22,7 @@ namespace Map_Creation_Tool.src.Controller
 		//{
 		//	_imageConverter = new Map_Creation_Tool.src.Model.ImageConverter();
 		//}
-		public static (List<List<Rgb>>?, string) processImage(System.Drawing.Image image)
+		public static (List<List<MCvScalar>>?, string) processImage(System.Drawing.Image image)
 		{
 			try
 			{
@@ -31,7 +31,7 @@ namespace Map_Creation_Tool.src.Controller
 
 				// Process the image using ImageConverter class
 				Mat matFromImage = Map_Creation_Tool.src.Model.ImageConverter.GetMatFromSDImage(image);
-				var (grid, conversionMessage) = Map_Creation_Tool.src.Model.ImageConverter.ConvertImageToGrid(matFromImage);
+				var (grid, conversionMessage) = Map_Creation_Tool.src.Model.ImageConverter.ConvertImageToGrid(matFromImage,3);
 
 				if (grid == null)
 					return (null, conversionMessage);
@@ -39,7 +39,7 @@ namespace Map_Creation_Tool.src.Controller
 				return (grid, "Image converted to grid");
 			}catch(Exception ex)
 			{
-				return (null, "exception"); ;
+				return (null, $"An exception occurred: {ex.Message}"); ;
 			}
 			
 		}

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Map Creation Tool")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+89bc8958faf3729ad871a569a9d0f19b2108d339")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62d948067c90a0196ec22a6d3a8ba50dcbe2b7dc")]
 [assembly: System.Reflection.AssemblyProductAttribute("Map Creation Tool")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Map Creation Tool")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

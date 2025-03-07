@@ -39,7 +39,7 @@ namespace Map_Creation_Tool.src.View
 					}
 					catch (Exception ex)
 					{
-						label1.Text = "something went wrong";
+						label1.Text = $"An exception occurred: {ex.Message}";
 
 					}
 				}

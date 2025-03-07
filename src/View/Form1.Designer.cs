@@ -42,7 +42,7 @@
 			button1.BackColor = SystemColors.HotTrack;
 			button1.FlatStyle = FlatStyle.Popup;
 			button1.ForeColor = SystemColors.Control;
-			button1.Location = new Point(266, 525);
+			button1.Location = new Point(261, 492);
 			button1.Name = "button1";
 			button1.Size = new Size(94, 29);
 			button1.TabIndex = 1;
@@ -55,18 +55,18 @@
 			label1.Anchor = AnchorStyles.None;
 			label1.AutoSize = true;
 			label1.ForeColor = SystemColors.WindowText;
-			label1.Location = new Point(301, 440);
+			label1.Location = new Point(296, 412);
 			label1.Name = "label1";
 			label1.Size = new Size(25, 20);
 			label1.TabIndex = 2;
 			label1.Text = "llll";
-			label1.Click += this.label1_Click;
 			// 
 			// pictureBox1
 			// 
-			pictureBox1.Location = new Point(3, 3);
+			pictureBox1.Anchor = AnchorStyles.None;
+			pictureBox1.Location = new Point(61, 55);
 			pictureBox1.Name = "pictureBox1";
-			pictureBox1.Size = new Size(615, 402);
+			pictureBox1.Size = new Size(495, 284);
 			pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 			pictureBox1.TabIndex = 0;
 			pictureBox1.TabStop = false;
@@ -88,7 +88,7 @@
 			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
 			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
 			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-			tableLayoutPanel1.Size = new Size(1006, 600);
+			tableLayoutPanel1.Size = new Size(989, 563);
 			tableLayoutPanel1.TabIndex = 3;
 			tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
 			// 
@@ -97,7 +97,7 @@
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
 			AutoSize = true;
-			ClientSize = new Size(1006, 600);
+			ClientSize = new Size(989, 563);
 			Controls.Add(tableLayoutPanel1);
 			Name = "OpenForm";
 			StartPosition = FormStartPosition.CenterScreen;
