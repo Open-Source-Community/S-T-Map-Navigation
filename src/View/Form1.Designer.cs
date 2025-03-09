@@ -55,11 +55,13 @@
 			label1.Anchor = AnchorStyles.None;
 			label1.AutoSize = true;
 			label1.ForeColor = SystemColors.WindowText;
-			label1.Location = new Point(296, 412);
+			label1.Location = new Point(790, 187);
+			label1.MaximumSize = new Size(750, 750);
 			label1.Name = "label1";
 			label1.Size = new Size(25, 20);
 			label1.TabIndex = 2;
 			label1.Text = "llll";
+		
 			// 
 			// pictureBox1
 			// 
@@ -70,7 +72,7 @@
 			pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 			pictureBox1.TabIndex = 0;
 			pictureBox1.TabStop = false;
-			pictureBox1.Click += pictureBox1_Click;
+			
 			// 
 			// tableLayoutPanel1
 			// 
@@ -78,9 +80,9 @@
 			tableLayoutPanel1.ColumnCount = 2;
 			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.4060135F));
 			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5939865F));
-			tableLayoutPanel1.Controls.Add(label1, 0, 1);
 			tableLayoutPanel1.Controls.Add(button1, 0, 2);
 			tableLayoutPanel1.Controls.Add(pictureBox1, 0, 0);
+			tableLayoutPanel1.Controls.Add(label1, 1, 0);
 			tableLayoutPanel1.Dock = DockStyle.Fill;
 			tableLayoutPanel1.Location = new Point(0, 0);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -90,7 +92,7 @@
 			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
 			tableLayoutPanel1.Size = new Size(989, 563);
 			tableLayoutPanel1.TabIndex = 3;
-			tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
+	
 			// 
 			// OpenForm
 			// 
@@ -103,7 +105,7 @@
 			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Map Creation Tool";
 			WindowState = FormWindowState.Maximized;
-			Load += OpenForm_Load;
+			
 			((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();

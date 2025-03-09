@@ -21,24 +21,6 @@ namespace Map_Creation_Tool.src
 			//ApplicationConfiguration.Initialize();
 			Application.Run(new OpenForm());
 
-
-			// Load an image
-			//using (Mat image = CvInvoke.Imread("path_to_your_image.jpg"))
-			//{
-			//	if (image.IsEmpty)
-			//	{
-			//		Console.WriteLine("Could not load image!");
-			//		return;
-			//	}
-
-			//	// Display the image
-			//	CvInvoke.Imshow("Image Window", image);
-			//	CvInvoke.WaitKey(0);
-			//	CvInvoke.DestroyAllWindows();
-
-
-
-			//}
 		}
 	}
 }

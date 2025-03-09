@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Specialized;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
@@ -23,7 +24,7 @@ namespace Map_Creation_Tool.src.View
 				openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
 				openFileDialog.Title = "Select an Image";
 
-				// If the user selects a file and clicks OK
+				//If the user selects a file and clicks OK
 				if (openFileDialog.ShowDialog() == DialogResult.OK)
 				{
 					try
@@ -33,9 +34,23 @@ namespace Map_Creation_Tool.src.View
 
 						//send image to controller to process
 						var (grid, conversionMessage) = Controller.ImageConverterController.processImage(pictureBox1.Image);
-						label1.Text = conversionMessage;
+						var str = new StringBuilder();
 
-
+						//if (grid != null && grid.Count > 0)
+						//{
+						//	foreach (var row in grid)
+						//	{
+						//		foreach (var col in row)
+						//		{
+						//			str.Append($"{((int)col.V0)},{((int)col.V1)},{((int)col.V2)}..");
+						//			break;
+						//		}
+						//		str.AppendLine();
+						//		break;
+						//	}
+						//}
+						
+						label1.Text = str.ToString();
 					}
 					catch (Exception ex)
 					{
@@ -44,21 +59,6 @@ namespace Map_Creation_Tool.src.View
 					}
 				}
 			}
-		}
-
-		private void OpenForm_Load(object sender, EventArgs e)
-		{
-
-		}
-
-		private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-		{
-
-		}
-
-		private void pictureBox1_Click(object sender, EventArgs e)
-		{
-
 		}
 	}
 }

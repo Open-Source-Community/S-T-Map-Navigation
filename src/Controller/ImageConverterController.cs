@@ -1,5 +1,5 @@
 ﻿using Emgu.CV.Dnn;
-using Emgu.CV.Structure;                            
+using Emgu.CV.Structure;
 using System;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
@@ -16,12 +16,7 @@ namespace Map_Creation_Tool.src.Controller
 	 */
 	public class ImageConverterController
 	{
-		//private Map_Creation_Tool.src.Model.ImageConverter _imageConverter;
 
-		//public ImageConverterController()
-		//{
-		//	_imageConverter = new Map_Creation_Tool.src.Model.ImageConverter();
-		//}
 		public static (List<List<MCvScalar>>?, string) processImage(System.Drawing.Image image)
 		{
 			try
@@ -30,18 +25,19 @@ namespace Map_Creation_Tool.src.Controller
 					return (null, "Image not found");
 
 				// Process the image using ImageConverter class
-				Mat matFromImage = Map_Creation_Tool.src.Model.ImageConverter.GetMatFromSDImage(image);
-				var (grid, conversionMessage) = Map_Creation_Tool.src.Model.ImageConverter.ConvertImageToGrid(matFromImage,3);
+				Mat matFromImage = Model.ImageConverter.GetMatFromSDImage(image).Clone();
+				var (grid, conversionMessage) = Model.ImageConverter.ConvertImageToGrid(matFromImage, 3);
 
 				if (grid == null)
 					return (null, conversionMessage);
 
 				return (grid, "Image converted to grid");
-			}catch(Exception ex)
+			}
+			catch (Exception ex)
 			{
 				return (null, $"An exception occurred: {ex.Message}"); ;
 			}
-			
+
 		}
 
 	}

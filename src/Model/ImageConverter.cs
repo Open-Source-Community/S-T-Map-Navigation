@@ -5,14 +5,14 @@ using Emgu.CV.Structure;
 
 namespace Map_Creation_Tool.src.Model
 {
-    /* Get map image from own controller
+	/* Get map image from own controller
      * Convert the image to a grid of cells
      * Set the grid and the image in database 
      * Show interactive map in view
      */
-		public static class ImageConverter
-		{
-			private static readonly HashSet<Rgb> Allowedcolors = new HashSet<Rgb>
+	public static class ImageConverter
+	{
+		private static readonly HashSet<Rgb> Allowedcolors = new HashSet<Rgb>
 		{
 			new Rgb(238,232,232), //obstacle
 			new Rgb(242,203,170), //medium traffic orange
@@ -20,16 +20,13 @@ namespace Map_Creation_Tool.src.Model
             new Rgb(189,198,197) ,//regular path: grey
             new Rgb(162,193,221) ,//busy path: blue
         };
-		//public ImageConverter()
-		//{
-
-		//}
+		
 		public static Mat loadImage(string filepath)
 		{
 			return CvInvoke.Imread(filepath, ImreadModes.Color);
 		}
-		
-		public static bool IdentifyColor(Rgb rgbColor, HashSet<Rgb> colors )
+
+		public static bool IdentifyColor(Rgb rgbColor, HashSet<Rgb> colors)
 		{
 			int threshold = 30;
 			for (int i = 0; i < colors.Count; i++)
@@ -75,69 +72,69 @@ namespace Map_Creation_Tool.src.Model
 							CvInvoke.CvtColor(convertedImage, convertedImage, ColorConversion.Bgra2Rgb);
 						}
 					}
-					image = convertedImage;
+					image = convertedImage.Clone();
 				}
 			}
 			return image;
 		}
 		public static (bool, string) validateImage(Mat image)
+		{
+			if (image == null || image.IsEmpty)
+				return (false, "Image not found");
+
+
+			//to allow pixel manipulation
+			Image<Rgb, byte> img = image.ToImage<Rgb, byte>();
+
+
+			//bool hasSource = false; //if there at least one red pixel (255,0,0) exists which represents the source
+			int countColors = 0;
+			for (int y = 0; y < img.Height; y++)
 			{
-				if (image == null || image.IsEmpty)
-					return (false, "Image not found");
-
-				Mat rgbImage = new Mat();
-
-				Image<Rgb, byte> img = rgbImage.ToImage<Rgb, byte>();
-				//to allow pixel manipulation
-
-				//bool hasSource = false; //if there at least one red pixel (255,0,0) exists which represents the source
-			int countColors = 0; 
-				for (int y = 0; y < img.Height; y++)
+				for (int x = 0; x < img.Width; x++)
 				{
-					for (int x = 0; x < img.Width; x++)
-				{
-						Rgb pixelColor = img[y, x];
+					Rgb pixelColor = img[y, x];
 
-						//if (pixelColor.Equals(new Rgb(255, 0, 0)))
-						//	hasSource = true;
-						if (IdentifyColor(pixelColor, Allowedcolors))
-							countColors++ ;
-					
-					}
+					//if (pixelColor.Equals(new Rgb(255, 0, 0)))
+					//	hasSource = true;
+					if (IdentifyColor(pixelColor, Allowedcolors))
+						countColors++;
+
 				}
-				//if (!hasSource)
-				//	return (false, "Image does not contain a source");
-				
-				if (countColors < (img.Cols * img.Rows)/8)
+			}
+			//if (!hasSource)
+			//	return (false, "Image does not contain a source");
+
+			if (countColors < (img.Cols * img.Rows) / 8)
 				return (true, "Image doesnot have enough allowed colors");
 
 			return (true, "Image meets the constraints");
-			}
+		}
 
-		public static (List<List<MCvScalar>>?, string) ConvertImageToGrid(Mat image,int k)
+		public static (List<List<MCvScalar>>?, string) ConvertImageToGrid(Mat image1, int k)
 		{
 			try
 			{
+				Mat image = validateImgChannels(image1).Clone();
 				var (isValid, message) = validateImage(image);
 				if (!isValid)
 					return (null, message);
-				image = validateImgChannels(image);
 
 
 				// Get original dimensions
-				int height =image.Rows;
-			int width =image.Cols;
+				int height = image.Rows;
+				int width = image.Cols;
 
-			// Compute new dimensions
-			int newHeight = height / k;
-			int newWidth = width / k;
+				//Compute new dimensions
+				int newHeight = height / k;
+				int newWidth = width / k;
 
-			List<List<MCvScalar>> grid = new List<List<MCvScalar>>();
-			//empty list called grid store each row of pixels as a list of rgb values
-			
+				List<List<MCvScalar>> grid = new List<List<MCvScalar>>();
+				//empty list called grid store each row of pixels as a list of rgb values
+
 				Mat rgbImage = new Mat(image.Size, DepthType.Cv8U, 3);
 
-				// Iterate over the original image in steps of k
+				//Iterate over the original image in steps of k
 				//GRID CREATION
 				for (int y = 0; y < newHeight; y++)
 				{
@@ -152,9 +149,9 @@ namespace Map_Creation_Tool.src.Model
 
 						// Adjust ROI dimensions if it exceeds image bounds
 						if (roiX + roiWidth > width)
-							roiWidth = width - roiX; 
+							roiWidth = width - roiX;
 						if (roiY + roiHeight > height)
-							roiHeight = height - roiY; 
+							roiHeight = height - roiY;
 
 						// Create a new Rectangle with the adjusted dimensions
 						Rectangle roi = new Rectangle(roiX, roiY, roiWidth, roiHeight);
@@ -173,17 +170,15 @@ namespace Map_Creation_Tool.src.Model
 					}
 					grid.Add(row);
 				}
-				
 				return (grid, "Image converted to grid");
-
-			}catch (Exception ex)
+			}
+			catch (Exception ex)
 			{
-	
 				return (null, $"An exception occurred: {ex.Message}");
 			}
 
-			
-			}
+
+		}
 
 		public static Mat GetMatFromSDImage(System.Drawing.Image image)
 		{
@@ -213,33 +208,4 @@ namespace Map_Creation_Tool.src.Model
 
 	}
 }
-//public static (List<List<Rgb>>, string) ConvertImageToGrid(Mat image)
-//{
-//	var (isValid, message) = validateImage(image);
-//	if (!isValid)
-//		return (null, message);
-
-//	List<List<Rgb>> grid = new List<List<Rgb>>();
-//	//empty list called grid store each row of pixels as a list of rgb values
-
-//	Mat rgbImage = new Mat();
-
-//	//OpenCV stores images in BGR format by default. The method converts the image to RGB
-//	CvInvoke.CvtColor(image, rgbImage, ColorConversion.Bgr2Rgb);
-
-//	Image<Rgb, byte> img = rgbImage.ToImage<Rgb, byte>();//For pixel level access
-
-//	//GRID CREATION
-//	for (int y = 0; y < img.Height; y++)
-//	{
-//		List<Rgb> row = new List<Rgb>();
-//		for (int x = 0; x < img.Width; x++)
-//		{
-//			row.Add(img[y, x]);
-//		}
-//		grid.Add(row);
-//	}
-//	return (grid, "Image converted to grid");
-
-//}
 
