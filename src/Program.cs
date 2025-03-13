@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using Map_Creation_Tool.src.View; 
+
 namespace Map_Creation_Tool.src
 {
     internal static class Program
@@ -13,8 +14,9 @@ namespace Map_Creation_Tool.src
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new OpenForm());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MapCreationForm());
         }
     }
 }

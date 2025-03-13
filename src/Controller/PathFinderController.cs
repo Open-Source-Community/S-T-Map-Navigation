@@ -32,7 +32,7 @@ namespace Map_Creation_Tool.src.Controller
             PathFinder finder = new(fromPoint , toPoint);
 
             finder.findPath();
-            finder.showPath();
+            //finder.showPath();
         }
 
     }

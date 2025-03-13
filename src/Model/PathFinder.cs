@@ -60,7 +60,7 @@ namespace Map_Creation_Tool.src.Model
         {
             return (int)Math.Sqrt(Math.Pow(from.X - to.X, 2) + Math.Pow(from.Y - to.Y, 2));
         } 
-
+         
         //Calaculate the weight of the cell based on Color of pixel
         public int calculateWeight(int row , int col)
         {
