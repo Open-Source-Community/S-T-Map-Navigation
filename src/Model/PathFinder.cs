@@ -10,8 +10,15 @@ namespace Map_Creation_Tool.src.Model
         private static readonly int INF = 1_000_000_00;
         private XY_Point fromPoint, toPoint;
         private static List<XY_Point> path;
+
         private static readonly int[] dx = { 0, 1, 0, -1 , 1, 1, -1, -1};
         private static readonly int[] dy = { 1, 0, -1, 0 , 1 ,-1 , 1, -1};
+
+        private static readonly byte OBSTACLE = byte.MaxValue;  // Blocked cells
+        private static readonly byte REGULAR_PATH = 1;        // Gray
+        private static readonly byte BUSY_PATH = 2;           // Orange
+        private static readonly byte VERY_BUSY_PATH = 4;      // Red
+        private static readonly byte PLACE = 1;               // White
 
         public PathFinder(XY_Point fromPoint , XY_Point toPoint)
 		{
@@ -50,6 +57,11 @@ namespace Map_Creation_Tool.src.Model
         //Calaculate the weight of the cell based on RGB values
         public int calculateWeight(int row , int col)
         {
+            Color curCell = Database.Instance[row,col];
+
+                        
+
+
             return 0;
         }
 

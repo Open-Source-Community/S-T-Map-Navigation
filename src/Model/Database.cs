@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 namespace Map_Creation_Tool.src.Model
 {
     /*Contain any data that needs to be stored
@@ -7,42 +8,41 @@ namespace Map_Creation_Tool.src.Model
 
     internal class Database
     {
-        private static Cell[,] curGrid;
-        //private static Image curImage;
-        public static Cell[,] CurGrid
+        private static Bitmap imagePixels;
+        private static Image curMapImage;
+        
+        public Bitmap ImagePixels
+        {
+            set { imagePixels = value; }
+        }
+
+        public Image CurMapImage
+        {
+            set { curMapImage = value; }
+        }
+
+        public int imagePixelsHeight
         {
             get
             {
-                return curGrid;
-            }
-            set
-            {
-                curGrid = value;
+                return imagePixels.Height;
             }
         }
 
-        public int GridWidth
+        public int ImagePixelsHeight
         {
             get
             {
-                return curGrid.GetLength(0);
+                return imagePixels.Height;
             }
         }
 
-        public int GridHeight
+        //indexer to get a pixel
+        public Color this[int x, int y]
         {
             get
             {
-                return curGrid.GetLength(1);
-            }
-        }
-
-        //indexer to get a cell from the grid
-        public Cell this[int x, int y]
-        {
-            get
-            {
-                return curGrid[x, y];
+                return imagePixels.GetPixel(x , y);
             }
         }
 
@@ -50,7 +50,6 @@ namespace Map_Creation_Tool.src.Model
         public static Database Instance { get; } = new Database();   
         private Database()
         {
-            curGrid = null;
         }
     }
 }
