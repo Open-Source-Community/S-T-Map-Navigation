@@ -11,9 +11,11 @@ namespace Map_Creation_Tool.src.Model
         private XY_Point fromPoint, toPoint;
         private static List<XY_Point> path;
 
+        //Directions of path finding
         private static readonly int[] dx = { 0, 1, 0, -1 , 1, 1, -1, -1};
         private static readonly int[] dy = { 1, 0, -1, 0 , 1 ,-1 , 1, -1};
 
+        //Weight of the cells
         private static readonly byte OBSTACLE = byte.MaxValue;  // Blocked cells
         private static readonly byte REGULAR_PATH = 1;        // Gray
         private static readonly byte BUSY_PATH = 2;           // Orange
@@ -25,8 +27,13 @@ namespace Map_Creation_Tool.src.Model
             this.fromPoint = fromPoint;
             this.toPoint = toPoint;
         }
-        
 
+        public List<XY_Point> Path
+        {
+            get { return path; }
+        }
+
+        //To use it in the priority queue in A-star algorithm
         class Node : IComparable<Node>
         {
             public XY_Point point { get; set; }
@@ -54,29 +61,44 @@ namespace Map_Creation_Tool.src.Model
             return (int)Math.Sqrt(Math.Pow(from.X - to.X, 2) + Math.Pow(from.Y - to.Y, 2));
         } 
 
-        //Calaculate the weight of the cell based on RGB values
+        //Calaculate the weight of the cell based on Color of pixel
         public int calculateWeight(int row , int col)
         {
-            Color curCell = Database.Instance[row,col];
+            Color curPixel = Database.Instance[row,col];
 
-                        
-
-
-            return 0;
+            if(curPixel == Color.Red)
+            {
+                return VERY_BUSY_PATH;
+            }
+            else if (curPixel == Color.Orange)
+            {
+                return BUSY_PATH;
+            }
+            else if (curPixel == Color.Gray)
+            {
+                return REGULAR_PATH;
+            }
+            else if (curPixel == Color.White)
+            {
+                return PLACE;
+            }
+            else
+            {
+                return OBSTACLE;
+            }
         }
 
+        //Assert the boundaries and the cell is not an obstacle
         private bool isValid(int x, int y , int rows ,int cols)
         {
-            return 0 <= x && x < rows && 0 <= y && y < cols;
+            return 0 <= x && x < rows && 0 <= y && y < cols && calculateWeight(x , y) != OBSTACLE;
         }
-
 
         public void findPath()
         {
             //we need to confirm the colors and it's weight
-
-            int rows = Database.Instance.GridWidth;
-            int cols = Database.Instance.GridHeight;
+            int rows = Database.Instance.ImagePixelsWidth;
+            int cols = Database.Instance.ImagePixelsHeight;
 
             int[,] len = new int[rows, cols];
             Dictionary<XY_Point, XY_Point> parent = new Dictionary<XY_Point, XY_Point>();
@@ -113,7 +135,7 @@ namespace Map_Creation_Tool.src.Model
                 {
                     int nX = curNode.point.X + dx[i];
                     int nY = curNode.point.Y + dy[i];
-                    if (isValid(nX , nY , rows , cols) /* && this cell not wall*/)
+                    if (isValid(nX , nY , rows , cols))
                     {
                         int newLen = len[curNode.point.X, curNode.point.Y] + calculateWeight(nX , nY);
                         if (newLen < len[nX, nY])
@@ -148,10 +170,6 @@ namespace Map_Creation_Tool.src.Model
             path.Reverse();
         }
 
-        //call the view to show the path
-        public void showPath()
-        {
-
-        }
+        
     }
 }

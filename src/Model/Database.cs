@@ -21,11 +21,11 @@ namespace Map_Creation_Tool.src.Model
             set { curMapImage = value; }
         }
 
-        public int imagePixelsHeight
+        public int ImagePixelsWidth
         {
             get
             {
-                return imagePixels.Height;
+                return imagePixels.Width;
             }
         }
 
