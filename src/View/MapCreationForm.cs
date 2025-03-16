@@ -20,7 +20,7 @@ namespace Map_Creation_Tool.src.View
 
 
 
-    public partial class MapCreationForm : Form
+    public class MapCreationForm : Form
     {
         private const short WIDTH = 1280;
         private const short HEIGHT = 720;
@@ -101,6 +101,9 @@ namespace Map_Creation_Tool.src.View
             var btnNew = new Button { Text = "New", Width = 60 };
             btnNew.Click += (s, e) => InitializeCanvas(WIDTH, HEIGHT);
 
+            var btnLoad = new Button { Text = "Load", Width = 60 };
+            btnLoad.Click += LoadMap;
+
             var btnSave = new Button { Text = "Save", Width = 60 };
             btnSave.Click += SaveMap;
 
@@ -116,7 +119,7 @@ namespace Map_Creation_Tool.src.View
             var gridCheck = new CheckBox { Text = "Snap to Grid", AutoSize = true };
             gridCheck.CheckedChanged += (s, e) => gridSnap = gridCheck.Checked;
 
-            toolbar.Controls.AddRange(new Control[] { btnNew, btnSave, btnUndo, btnRedo, sizeTrack, gridCheck });
+            toolbar.Controls.AddRange(new Control[] { btnNew,btnLoad, btnSave, btnUndo, btnRedo, sizeTrack, gridCheck });
 
             // Drawing Area
             pictureBox = new PictureBox
@@ -382,6 +385,20 @@ namespace Map_Creation_Tool.src.View
         private Rectangle GetRectangle(Point p1, Point p2) => new Rectangle(
             Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y),
             Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y));
+
+        private void LoadMap(object sender, EventArgs e)
+        {
+            using (var openDialog = new OpenFileDialog())
+            {
+                openDialog.Filter = "Image Files|*.png;*.jpg";
+                openDialog.Title = "Load Map Image";
+                if (openDialog.ShowDialog() == DialogResult.OK)
+                {
+                    canvas = new Bitmap(openDialog.FileName);
+                    pictureBox.Image = canvas;
+                }
+            }
+        }
 
         private void SaveMap(object sender, EventArgs e)
         {
