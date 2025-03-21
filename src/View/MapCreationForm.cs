@@ -120,7 +120,9 @@ namespace Map_Creation_Tool.src.View
             var gridCheck = new CheckBox { Text = "Snap to Grid", AutoSize = true };
             gridCheck.CheckedChanged += (s, e) => gridSnap = gridCheck.Checked;
 
+
             toolbar.Controls.AddRange(new Control[] { btnNew,btnLoad, btnSave, btnUndo, btnRedo, sizeTrack, gridCheck });
+
 
             // Drawing Area
             pictureBox = new PictureBox
@@ -386,6 +388,7 @@ namespace Map_Creation_Tool.src.View
         private Rectangle GetRectangle(Point p1, Point p2) => new Rectangle(
             Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y),
             Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y));
+
 
         private void LoadMap(object sender, EventArgs e)
         {
