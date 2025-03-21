@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Map_Creation_Tool.src.Controller;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,8 +11,10 @@ using System.Windows.Forms;
 
 namespace Map_Creation_Tool.src.View
 {
+
     public partial class MMenu : Form
     {
+    const string BACKGROUND_PATH = @"D:\OSC\S&T\Map Navigator\res\Assets\firstScreen.png";
         private Panel buttonPanel;
         private Label titleLabel;
         private PictureBox logoBox;
@@ -26,30 +29,28 @@ namespace Map_Creation_Tool.src.View
 
         private void InitializeComponent()
         {
-            // Form settings
+           
             this.Text = "Map Navigator";
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             this.KeyPreview = true;
           
-            // Set background image
            
-                string bgPath = @"D:\OSC\S&T\Map Navigator\res\Assets\firstScreen.png";
-                if (File.Exists(bgPath))
+                if (File.Exists(BACKGROUND_PATH))
                 {
-                    this.BackgroundImage = Image.FromFile(bgPath);
+                    this.BackgroundImage = Image.FromFile(BACKGROUND_PATH);
                     this.BackgroundImageLayout = ImageLayout.Stretch;
                 }
             
 
-            // Create logo
+          
             logoBox = new PictureBox
             {
                 Size = new Size(120, 120),
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Color.Transparent
             };
-                // Create a compass logo as a bitmap
+                
                 Bitmap logoBitmap = new Bitmap(120, 120);
                 using (Graphics g = Graphics.FromImage(logoBitmap))
                 {
@@ -207,25 +208,43 @@ namespace Map_Creation_Tool.src.View
             switch (buttonIndex)
             {
                 case 0: // How to Use
-                    MessageBox.Show("Map Navigator Help:\n\n" +
-                        "- Use Your Map: Load and navigate an existing map\n" +
-                        "- Draw Your Map: Create a new custom map\n" +
-                        "- Press ESC to exit the application");
+                    GuideForm guideForm= new GuideForm();
+                    this.Hide();
+                    guideForm.ShowDialog();
+                    this.Show();
                     break;
                 case 1: // Use Your Map
-                    MessageBox.Show("Loading map navigation module...");
-                    // Code to open map navigation form would go here
+
+                    OpenFileDialog ofd = new OpenFileDialog();
+                    ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+
+
+                    ImageConverterController imageConverter = new ImageConverterController();
+                    if (ofd.ShowDialog() == DialogResult.OK)
+                    {
+
+                        imageConverter.takeImage(new Bitmap(ofd.FileName));
+                        imageConverter.convertImage();
+                       
+                       
+                    }
+
+                    ShortestPathForm shortestPathForm = new ShortestPathForm();
+                    this.Hide();
+                    shortestPathForm.ShowDialog();
+                    this.Show();
+
                     break;
                 case 2: // Draw Your Map
-                    MessageBox.Show("Loading map creation module...");
-                    // Code to open map drawing form would go here
+                  MapCreationForm mapCreationForm = new MapCreationForm();
+                    this.Hide();
+                    mapCreationForm.ShowDialog();
+                    this.Show();
+                    
+
                     break;
                 case 3: // Exit
-                    if (MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        Application.Exit();
-                    }
+                    Application.Exit();
                     break;
             }
         }

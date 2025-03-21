@@ -13,22 +13,20 @@ namespace Map_Creation_Tool.src.View
 {
     public partial class ShortestPathForm : Form
     {
+        PictureBox pictureBox2= new PictureBox();
         List<XY_Point> xY_Points = [
           new XY_Point(40, 40), new XY_Point(50, 50),new XY_Point(60, 60),new XY_Point(0, 0),new XY_Point(10, 10),new XY_Point(20, 20),new XY_Point(30, 30)
             ];
         public ShortestPathForm()
         {
             InitializeComponent();
+            pictureBox1.Image = Database.Instance.CurMapImage;
         }
 
         public void DrawCirclesOnImage(List<XY_Point> list)
         {
 
-            if (pictureBox2.Image == null)
-            {
-                MessageBox.Show("No image loaded in PictureBox2!");
-                return;
-            }
+          
 
             Bitmap updatedImage = new Bitmap(pictureBox2.Image);
             using (Graphics g = Graphics.FromImage(updatedImage))
