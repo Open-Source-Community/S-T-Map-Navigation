@@ -20,12 +20,6 @@ namespace Map_Creation_Tool.src.Model
             Database.Instance.ImagePixels = imgMap;
             Database.Instance.CurMapImage = image;
         }
-
-
-
-        
-
-        
     }
 }
 

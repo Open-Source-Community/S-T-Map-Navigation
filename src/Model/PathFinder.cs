@@ -1,7 +1,17 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using Map_Creation_Tool.src.Model;
 namespace Map_Creation_Tool.src.Model
 {
+    enum PixelType: byte
+    {
+        PLACE = 1,
+        REGULAR_PATH = 1,
+        BUSY_PATH,
+        VERY_BUSY_PATH,
+        OBSTACLE = 255,
+    }
+
     /* Generate the shortest path between two points based on user option
      * show the path in the view
 	 */
@@ -9,6 +19,7 @@ namespace Map_Creation_Tool.src.Model
 	{ 
         private static readonly int INF = 1_000_000_00;
         private XY_Point fromPoint, toPoint;
+        private int pathType;
         private static List<XY_Point> path;
 
         //Directions of path finding
@@ -22,10 +33,11 @@ namespace Map_Creation_Tool.src.Model
         private static readonly byte VERY_BUSY_PATH = 4;      // Red
         private static readonly byte PLACE = 1;               // White
 
-        public PathFinder(XY_Point fromPoint , XY_Point toPoint)
+        public PathFinder(XY_Point fromPoint , XY_Point toPoint , PathType pathType)
 		{
             this.fromPoint = fromPoint;
             this.toPoint = toPoint;
+            this.pathType = pathType;
         }
 
         public List<XY_Point> Path
@@ -61,30 +73,30 @@ namespace Map_Creation_Tool.src.Model
             return (int)Math.Sqrt(Math.Pow(from.X - to.X, 2) + Math.Pow(from.Y - to.Y, 2));
         } 
          
-        //Calaculate the weight of the cell based on Color of pixel
+        //Calaculate the weight of the cell based on Color of pixel and the type of path
         public int calculateWeight(int row , int col)
         {
             Color curPixel = Database.Instance[row,col];
 
             if(curPixel == Color.Red)
             {
-                return VERY_BUSY_PATH;
+                return pathType == PathType.FASTEST_PATH? (byte)PixelType.VERY_BUSY_PATH : (byte)PixelType.REGULAR_PATH;
             }
             else if (curPixel == Color.Orange)
             {
-                return BUSY_PATH;
+                return pathType == PathType.FASTEST_PATH ? (byte)PixelType.BUSY_PATH : (byte)PixelType.REGULAR_PATH;
             }
             else if (curPixel == Color.Gray)
             {
-                return REGULAR_PATH;
+                return (byte)PixelType.REGULAR_PATH;
             }
             else if (curPixel == Color.White)
             {
-                return PLACE;
+                return (byte)PixelType.PLACE;
             }
             else
             {
-                return OBSTACLE;
+                return (byte)PixelType.OBSTACLE;
             }
         }
 
@@ -170,6 +182,5 @@ namespace Map_Creation_Tool.src.Model
             path.Reverse();
         }
 
-        
     }
 }

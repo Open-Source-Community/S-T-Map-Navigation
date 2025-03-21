@@ -84,17 +84,18 @@ namespace Map_Creation_Tool.src.View
             };
 
             // Color Buttons
-            AddColorButton(toolbar, "Path", Color.Gray);
-            AddColorButton(toolbar, "Busy", Color.Orange);
-            AddColorButton(toolbar, "Very Busy", Color.Red);
-            AddColorButton(toolbar, "Place", Color.White);
+            AddColorButton(toolbar, "Path", Color.White);
+            AddColorButton(toolbar, "Busy", Color.FromArgb(241,216 , 167));
+            AddColorButton(toolbar, "Very Busy", Color.FromArgb(223,145,158));
+            AddColorButton(toolbar, "Place", Color.FromArgb(229 , 229 , 228));
             AddColorButton(toolbar, "Obstacle", Color.Black);
+            
 
             // Tool Buttons
             AddToolButton(toolbar, "Brush", ToolType.Brush);
             AddToolButton(toolbar, "Eraser", ToolType.Eraser);
             AddToolButton(toolbar, "Rectangle", ToolType.Rectangle);
-            AddToolButton(toolbar, "Ellipse", ToolType.Ellipse);
+            //AddToolButton(toolbar, "Ellipse", ToolType.Ellipse);
             AddToolButton(toolbar, "Line", ToolType.Line);
             AddToolButton(toolbar, "Fill", ToolType.Fill);
 
@@ -119,7 +120,9 @@ namespace Map_Creation_Tool.src.View
             var gridCheck = new CheckBox { Text = "Snap to Grid", AutoSize = true };
             gridCheck.CheckedChanged += (s, e) => gridSnap = gridCheck.Checked;
 
-            toolbar.Controls.AddRange(new Control[] { btnNew, btnLoad, btnSave, btnUndo, btnRedo, sizeTrack, gridCheck });
+
+            toolbar.Controls.AddRange(new Control[] { btnNew,btnLoad, btnSave, btnUndo, btnRedo, sizeTrack, gridCheck });
+
 
             // Drawing Area
             pictureBox = new PictureBox
@@ -386,7 +389,8 @@ namespace Map_Creation_Tool.src.View
             Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y),
             Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y));
 
-        private void LoadMap(object sender , EventArgs e)
+
+        private void LoadMap(object sender, EventArgs e)
         {
             using (var openDialog = new OpenFileDialog())
             {
