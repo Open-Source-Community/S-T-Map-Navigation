@@ -84,17 +84,18 @@ namespace Map_Creation_Tool.src.View
             };
 
             // Color Buttons
-            AddColorButton(toolbar, "Path", Color.Gray);
-            AddColorButton(toolbar, "Busy", Color.Orange);
-            AddColorButton(toolbar, "Very Busy", Color.Red);
-            AddColorButton(toolbar, "Place", Color.White);
+            AddColorButton(toolbar, "Path", Color.White);
+            AddColorButton(toolbar, "Busy", Color.FromArgb(241,216 , 167));
+            AddColorButton(toolbar, "Very Busy", Color.FromArgb(223,145,158));
+            AddColorButton(toolbar, "Place", Color.FromArgb(229 , 229 , 228));
             AddColorButton(toolbar, "Obstacle", Color.Black);
+            
 
             // Tool Buttons
             AddToolButton(toolbar, "Brush", ToolType.Brush);
             AddToolButton(toolbar, "Eraser", ToolType.Eraser);
             AddToolButton(toolbar, "Rectangle", ToolType.Rectangle);
-            AddToolButton(toolbar, "Ellipse", ToolType.Ellipse);
+            //AddToolButton(toolbar, "Ellipse", ToolType.Ellipse);
             AddToolButton(toolbar, "Line", ToolType.Line);
             AddToolButton(toolbar, "Fill", ToolType.Fill);
 
