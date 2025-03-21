@@ -19,7 +19,7 @@ namespace Map_Creation_Tool.src.Model
 	{ 
         private static readonly int INF = 1_000_000_00;
         private XY_Point fromPoint, toPoint;
-        private int pathType;
+        private Controller.PathType pathType;
         private static List<XY_Point> path;
 
         //Directions of path finding
@@ -33,7 +33,7 @@ namespace Map_Creation_Tool.src.Model
         private static readonly byte VERY_BUSY_PATH = 4;      // Red
         private static readonly byte PLACE = 1;               // White
 
-        public PathFinder(XY_Point fromPoint , XY_Point toPoint , PathType pathType)
+        public PathFinder(XY_Point fromPoint , XY_Point toPoint , Controller.PathType pathType)
 		{
             this.fromPoint = fromPoint;
             this.toPoint = toPoint;
@@ -80,11 +80,11 @@ namespace Map_Creation_Tool.src.Model
 
             if(curPixel == Color.Red)
             {
-                return pathType == PathType.FASTEST_PATH? (byte)PixelType.VERY_BUSY_PATH : (byte)PixelType.REGULAR_PATH;
+                return pathType == Controller.PathType.FASTEST_PATH ? (byte)PixelType.VERY_BUSY_PATH : (byte)PixelType.REGULAR_PATH;
             }
             else if (curPixel == Color.Orange)
             {
-                return pathType == PathType.FASTEST_PATH ? (byte)PixelType.BUSY_PATH : (byte)PixelType.REGULAR_PATH;
+                return pathType == Controller.PathType.FASTEST_PATH? (byte)PixelType.BUSY_PATH : (byte)PixelType.REGULAR_PATH;
             }
             else if (curPixel == Color.Gray)
             {

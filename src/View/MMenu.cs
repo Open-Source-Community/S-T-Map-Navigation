@@ -225,14 +225,14 @@ namespace Map_Creation_Tool.src.View
 
                         imageConverter.takeImage(new Bitmap(ofd.FileName));
                         imageConverter.convertImage();
-                       
-                       
+
+                        ShortestPathForm shortestPathForm = new ShortestPathForm();
+                        this.Hide();
+                        shortestPathForm.ShowDialog();
+                        this.Show();
                     }
 
-                    ShortestPathForm shortestPathForm = new ShortestPathForm();
-                    this.Hide();
-                    shortestPathForm.ShowDialog();
-                    this.Show();
+                    
 
                     break;
                 case 2: // Draw Your Map

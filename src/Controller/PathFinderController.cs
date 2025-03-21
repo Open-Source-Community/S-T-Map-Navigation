@@ -16,8 +16,8 @@ namespace Map_Creation_Tool.src.Controller
 
     public class PathFinderController
     {
-        private int fromX, fromY, toX, toY 
-        PathType pathType;
+        private int fromX, fromY, toX, toY;
+        Controller.PathType pathType;
 
         public PathFinderController(int fromX , int fromY , int toX , int toY , int pathType)
         {
@@ -25,7 +25,7 @@ namespace Map_Creation_Tool.src.Controller
             this.fromY = fromY;
             this.toX = toX;
             this.toY = toY;
-            this.pathType = (PathType)pathType;
+            this.pathType = (Controller.PathType)pathType;
         }
 
         public void pathfinder()
