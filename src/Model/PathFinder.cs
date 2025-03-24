@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Eventing.Reader;
 using Map_Creation_Tool.src.Model;
+//using Map_Creation_Tool.src.Controller;
 namespace Map_Creation_Tool.src.Model
 {
     enum PixelType: byte
@@ -19,7 +20,7 @@ namespace Map_Creation_Tool.src.Model
 	{ 
         private static readonly int INF = 1_000_000_00;
         private XY_Point fromPoint, toPoint;
-        private int pathType;
+        private PathType pathType;
         private static List<XY_Point> path;
 
         //Directions of path finding
