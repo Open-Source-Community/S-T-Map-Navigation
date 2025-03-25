@@ -40,5 +40,67 @@ namespace Map_Creation_Tool.src.Model
             //finder.showPath();
         }
 
+    
+        //
+        // public XY_Point findNearestWalkablePoint(XY_Point fromPoint)
+        // {
+        //     PixelType cellType = getCellType(fromPoint.X, fromPoint.Y);
+        //     if (getCellType(fromPoint.X, fromPoint.Y) != PixelType.OBSTACLE
+        //         && getCellType(fromPoint.X, fromPoint.Y) != PixelType.PLACE)
+        //         return fromPoint;
+        //
+        //     //run the bfs algorithm to find the nearest walkable point
+        //     Queue<XY_Point> queue = new();
+        //     HashSet<XY_Point> visited = new();
+        //     visited.Add(fromPoint);
+        //     queue.Enqueue(fromPoint);
+        //
+        //     while (queue.Count > 0)
+        //     {
+        //         XY_Point point = queue.Dequeue();
+        //
+        //         if (getCellType(point.X, point.Y) != PixelType.OBSTACLE
+        //             && getCellType(point.X, point.Y) != PixelType.PLACE)
+        //             return point;
+        //
+        //         for (int i = 0; i < 8; i++)
+        //         {
+        //             int x = point.X + PathFinder.dx[i];
+        //             int y = point.Y + PathFinder.dy[i];
+        //             if (0 <= x && x < Database.Instance.ImagePixelsWidth
+        //                 && 0 <= y && y < Database.Instance.ImagePixelsHeight
+        //                 && !visited.Contains(new XY_Point(x, y)))
+        //             {
+        //                 visited.Add(new XY_Point(x, y));
+        //                 queue.Enqueue(new XY_Point(x, y));
+        //             }
+        //
+        //         }
+        //
+        //     }
+        //     return null;
+        // }
+        //
+        // public static PixelType getCellType(int x, int y)
+        // {
+        //     Color cell = Database.Instance[x, y];
+        //
+        //     if (cell == Color.White)
+        //         return PixelType.PLACE;
+        //     else if (cell == Color.Gray)
+        //         return PixelType.REGULAR_PATH;
+        //     else if (cell == Color.Orange)
+        //         return PixelType.BUSY_PATH;
+        //     else if (cell == Color.Red)
+        //         return PixelType.VERY_BUSY_PATH;
+        //
+        //
+        //
+        //     return PixelType.OBSTACLE;
+        // }
+        //
+
+
     }
-}
+ 
+ }

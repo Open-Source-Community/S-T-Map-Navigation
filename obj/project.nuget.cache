@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "VrjYA0sIQmQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\hgabr\\source\\repos\\S-T-Map-Navigatioon\\Map Creation Tool.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hgabr\\.nuget\\packages\\fontawesome.sharp\\6.6.0\\fontawesome.sharp.6.6.0.nupkg.sha512",
+    "C:\\Users\\hgabr\\.nuget\\packages\\fontawesome.sharp.pro\\6.6.0\\fontawesome.sharp.pro.6.6.0.nupkg.sha512"
+  ],
+  "logs": []
+}

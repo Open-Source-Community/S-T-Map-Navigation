@@ -1,0 +1,29 @@
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\bin\Debug\net9.0-windows\Map Creation Tool.exe
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\bin\Debug\net9.0-windows\Map Creation Tool.deps.json
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\bin\Debug\net9.0-windows\Map Creation Tool.runtimeconfig.json
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\bin\Debug\net9.0-windows\Map Creation Tool.dll
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\bin\Debug\net9.0-windows\Map Creation Tool.pdb
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\bin\Debug\net9.0-windows\FontAwesome.Sharp.dll
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\bin\Debug\net9.0-windows\FontAwesome.Sharp.Pro.dll
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Creation Tool.csproj.AssemblyReference.cache
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map_Creation_Tool.Properties.Resources.resources
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map_Creation_Tool.src.View.EntryScreen.resources
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map_Creation_Tool.src.View.OpenForm.resources
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map_Creation_Tool.src.View.GuideForm.resources
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map_Creation_Tool.src.View.MainMenu.resources
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map_Creation_Tool.src.View.MapCreationForm.resources
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map_Creation_Tool.src.View.MenuScreen.resources
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map_Creation_Tool.src.View.MMenu.resources
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map_Creation_Tool.src.View.ShortestPathForm.resources
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Creation Tool.csproj.GenerateResource.cache
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Creation Tool.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Creation Tool.AssemblyInfoInputs.cache
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Creation Tool.AssemblyInfo.cs
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Creation Tool.csproj.CoreCompileInputs.cache
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Creation Tool.sourcelink.json
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Crea.10789585.Up2Date
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Creation Tool.dll
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\refint\Map Creation Tool.dll
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Creation Tool.pdb
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\Map Creation Tool.genruntimeconfig.cache
+C:\Users\hgabr\source\repos\S-T-Map-Navigatioon\obj\Debug\net9.0-windows\ref\Map Creation Tool.dll

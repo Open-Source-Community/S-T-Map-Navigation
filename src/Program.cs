@@ -16,7 +16,7 @@ namespace Map_Creation_Tool.src
             // see https://aka.ms/applicationconfiguration.
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MapCreationForm());
+            Application.Run(new MMenu());
         }
     }
 }

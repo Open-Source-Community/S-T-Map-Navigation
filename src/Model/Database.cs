@@ -18,6 +18,7 @@ namespace Map_Creation_Tool.src.Model
         public Image CurMapImage
         {
             set { curMapImage = value; }
+            get { return curMapImage; }
         }
 
         public int ImagePixelsWidth
