@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
+    <PackageReference Include="FontAwesome.Sharp.Pro" Version="6.6.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +19,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="pathselectionform.cs">
+      <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
 

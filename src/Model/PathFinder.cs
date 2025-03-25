@@ -19,8 +19,8 @@ namespace Map_Creation_Tool.src.Model
 	{ 
         private static readonly int INF = 1_000_000_00;
         private XY_Point fromPoint, toPoint;
-        private Controller.PathType pathType;
-        private static List<XY_Point> path;
+        private PathType pathType;
+        private  List<XY_Point> path;
 
         //Directions of path finding
         private static readonly int[] dx = { 0, 1, 0, -1 , 1, 1, -1, -1};
@@ -33,15 +33,18 @@ namespace Map_Creation_Tool.src.Model
         private static readonly byte VERY_BUSY_PATH = 4;      // Red
         private static readonly byte PLACE = 1;               // White
 
-        public PathFinder(XY_Point fromPoint , XY_Point toPoint , Controller.PathType pathType)
+        public PathFinder(XY_Point fromPoint , XY_Point toPoint , PathType pathType)
 		{
             this.fromPoint = fromPoint;
             this.toPoint = toPoint;
             this.pathType = pathType;
+            Path = new List<XY_Point>(); //initialize the list of points
         }
 
         public List<XY_Point> Path
         {
+            
+           set { path = value; }
             get { return path; }
         }
 
@@ -60,7 +63,6 @@ namespace Map_Creation_Tool.src.Model
                 H = h;
                 Weight = G + H;
             }
-
             public int CompareTo(Node other)
             {
                 return Weight.CompareTo(other.Weight);
@@ -80,11 +82,11 @@ namespace Map_Creation_Tool.src.Model
 
             if(curPixel == Color.Red)
             {
-                return pathType == Controller.PathType.FASTEST_PATH ? (byte)PixelType.VERY_BUSY_PATH : (byte)PixelType.REGULAR_PATH;
+                return pathType == PathType.FASTEST_PATH? (byte)PixelType.VERY_BUSY_PATH : (byte)PixelType.REGULAR_PATH;
             }
             else if (curPixel == Color.Orange)
             {
-                return pathType == Controller.PathType.FASTEST_PATH? (byte)PixelType.BUSY_PATH : (byte)PixelType.REGULAR_PATH;
+                return pathType == PathType.FASTEST_PATH ? (byte)PixelType.BUSY_PATH : (byte)PixelType.REGULAR_PATH;
             }
             else if (curPixel == Color.Gray)
             {
@@ -108,6 +110,7 @@ namespace Map_Creation_Tool.src.Model
 
         public void findPath()
         {
+            MessageBox.Show("Finding path...");
             //we need to confirm the colors and it's weight
             int rows = Database.Instance.ImagePixelsWidth;
             int cols = Database.Instance.ImagePixelsHeight;
@@ -159,27 +162,53 @@ namespace Map_Creation_Tool.src.Model
                             parent[curPoint] = curNode.point;
                         }
                     }
+                    else
+                    {
+                       // MessageBox.Show("Invalid move to " + nX + " " + nY );
+                        string reason = "";
+                        if (nX < 0 || nX >= rows || nY < 0 || nY >= cols)
+                            reason = "Out of map boundaries.";
+                        else if (calculateWeight(nX, nY) == OBSTACLE)
+                            reason = "Blocked by an obstacle.";
+        
+                        MessageBox.Show($"Invalid move to ({nX}, {nY}). Reason: {reason}");}
                 }
             }
 
             buildPath(ref parent);
+           // MessageBox.Show("Path found!");
         }
 
         public void buildPath(ref Dictionary<XY_Point , XY_Point> parent)
         {
             XY_Point curPoint = toPoint;
-            while (curPoint.X != -1 && curPoint.Y != -1)
+            path.Clear();
+            MessageBox.Show("starting path build from " + curPoint.X + " " + curPoint.Y + "");
+            foreach (var entry in parent)
+            {
+                System.Windows.MessageBox.Show(entry.Key.X + " " + entry.Key.Y + " " + entry.Value.X + " " + entry.Value.Y);    
+            }
+            while (parent.ContainsKey(curPoint)&&curPoint.X != -1 && curPoint.Y != -1)
             {
                 path.Add(curPoint);
-                if (!parent.ContainsKey(curPoint))
-                {
-                    Console.WriteLine($"Doesn't exist {curPoint.X}::{curPoint.Y}");
-                    break;
-                }
+                MessageBox.Show("adding " + curPoint.X + " " + curPoint.Y + "");
                 curPoint = parent[curPoint];
             }
+            
+            if (curPoint.X == fromPoint.X )
+            {
+                path.Add(fromPoint);  // Include the starting point
+                Console.WriteLine($"Reached the start point: ({fromPoint.X}, {fromPoint.Y})");
+            }
+            else
+            {
+                Console.WriteLine("Failed to construct a valid path. Path may not exist.");
+                MessageBox.Show("Path does not exist!");
+                return;
+            } 
 
             path.Reverse();
+            Console.WriteLine("final path count: " + path.Count + "");
         }
 
     }

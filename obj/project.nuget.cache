@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "QpKaH/7NBWo=",
+  "dgSpecHash": "VrjYA0sIQmQ=",
   "success": true,
-  "projectFilePath": "D:\\OSC\\S&T\\Map Navigator\\Map Creation Tool.csproj",
+  "projectFilePath": "C:\\Users\\hgabr\\source\\repos\\S-T-Map-Navigatioon\\Map Creation Tool.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Poula Saber\\.nuget\\packages\\fontawesome.sharp\\6.6.0\\fontawesome.sharp.6.6.0.nupkg.sha512"
+    "C:\\Users\\hgabr\\.nuget\\packages\\fontawesome.sharp\\6.6.0\\fontawesome.sharp.6.6.0.nupkg.sha512",
+    "C:\\Users\\hgabr\\.nuget\\packages\\fontawesome.sharp.pro\\6.6.0\\fontawesome.sharp.pro.6.6.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -13,6 +13,21 @@
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App"
         ]
+      },
+      "FontAwesome.Sharp.Pro/6.6.0": {
+        "type": "package",
+        "dependencies": {
+          "FontAwesome.Sharp": "6.6.0"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/FontAwesome.Sharp.Pro.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/FontAwesome.Sharp.Pro.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App"
+        ]
       }
     }
   },
@@ -33,31 +48,49 @@
         "lib/net8.0-windows7.0/FontAwesome.Sharp.dll",
         "lib/netcoreapp3.1/FontAwesome.Sharp.dll"
       ]
+    },
+    "FontAwesome.Sharp.Pro/6.6.0": {
+      "sha512": "gjsVSBFXeBPM8NwG5pSEMVpjyhPlG4D6aMDT51p1Pqf9i1CZf7yBE20eVhbWMFDyuXw3KIU/H9eR5quLkJMEhQ==",
+      "type": "package",
+      "path": "fontawesome.sharp.pro/6.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fontawesome.sharp.pro.6.6.0.nupkg.sha512",
+        "fontawesome.sharp.pro.nuspec",
+        "lib/net472/FontAwesome.Sharp.Pro.dll",
+        "lib/net48/FontAwesome.Sharp.Pro.dll",
+        "lib/net6.0-windows7.0/FontAwesome.Sharp.Pro.dll",
+        "lib/net7.0-windows7.0/FontAwesome.Sharp.Pro.dll",
+        "lib/net8.0-windows7.0/FontAwesome.Sharp.Pro.dll",
+        "lib/netcoreapp3.1/FontAwesome.Sharp.Pro.dll"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "net9.0-windows7.0": [
-      "FontAwesome.Sharp >= 6.6.0"
+      "FontAwesome.Sharp >= 6.6.0",
+      "FontAwesome.Sharp.Pro >= 6.6.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Poula Saber\\.nuget\\packages\\": {},
+    "C:\\Users\\hgabr\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\OSC\\S&T\\Map Navigator\\Map Creation Tool.csproj",
+      "projectUniqueName": "C:\\Users\\hgabr\\source\\repos\\S-T-Map-Navigatioon\\Map Creation Tool.csproj",
       "projectName": "Map Creation Tool",
-      "projectPath": "D:\\OSC\\S&T\\Map Navigator\\Map Creation Tool.csproj",
-      "packagesPath": "C:\\Users\\Poula Saber\\.nuget\\packages\\",
-      "outputPath": "D:\\OSC\\S&T\\Map Navigator\\obj\\",
+      "projectPath": "C:\\Users\\hgabr\\source\\repos\\S-T-Map-Navigatioon\\Map Creation Tool.csproj",
+      "packagesPath": "C:\\Users\\hgabr\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\hgabr\\source\\repos\\S-T-Map-Navigatioon\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Poula Saber\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hgabr\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -66,7 +99,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -83,15 +115,19 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0-windows7.0": {
         "targetAlias": "net9.0-windows",
         "dependencies": {
           "FontAwesome.Sharp": {
+            "target": "Package",
+            "version": "[6.6.0, )"
+          },
+          "FontAwesome.Sharp.Pro": {
             "target": "Package",
             "version": "[6.6.0, )"
           }
@@ -115,7 +151,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
