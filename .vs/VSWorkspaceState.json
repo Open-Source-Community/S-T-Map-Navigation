@@ -1,6 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Properties",
+    "\\res",
+    "\\res\\Assets",
+    "\\src",
+    "\\src\\TestDrivers",
+    "\\src\\View"
   ],
+  "SelectedNode": "\\Properties",
   "PreviewInSolutionExplorer": false
 }

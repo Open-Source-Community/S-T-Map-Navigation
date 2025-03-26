@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Diagnostics.Eventing.Reader;
-using Map_Creation_Tool.src.Model;
+using Map_Creation_Tool.src.Controller;
 namespace Map_Creation_Tool.src.Model
 {
-    enum PixelType: byte
+    public enum PixelType: byte
     {
         PLACE = 1,
-        REGULAR_PATH = 1,
+        REGULAR_PATH,
         BUSY_PATH,
         VERY_BUSY_PATH,
         OBSTACLE = 255,
@@ -19,12 +19,12 @@ namespace Map_Creation_Tool.src.Model
 	{ 
         private static readonly int INF = 1_000_000_00;
         private XY_Point fromPoint, toPoint;
-        private PathType pathType;
-        private  List<XY_Point> path;
+        private Controller.PathType pathType;
+        private List<XY_Point> path;
 
         //Directions of path finding
-        private static readonly int[] dx = { 0, 1, 0, -1 , 1, 1, -1, -1};
-        private static readonly int[] dy = { 1, 0, -1, 0 , 1 ,-1 , 1, -1};
+        public static readonly int[] dx = { 0, 1, 0, -1 , 1, 1, -1, -1};
+        public static readonly int[] dy = { 1, 0, -1, 0 , 1 ,-1 , 1, -1};
 
         //Weight of the cells
         private static readonly byte OBSTACLE = byte.MaxValue;  // Blocked cells
@@ -33,7 +33,13 @@ namespace Map_Creation_Tool.src.Model
         private static readonly byte VERY_BUSY_PATH = 4;      // Red
         private static readonly byte PLACE = 1;               // White
 
-        public PathFinder(XY_Point fromPoint , XY_Point toPoint , PathType pathType)
+        public static (int R, int G, int B) PLACE_COLOR = (238 , 232 , 232);
+        public static (int R, int G, int B) REGULAR_PATH_COLOR = (189, 198, 197);
+        public static (int R, int G, int B) BUSY_PATH_COLOR = (162, 193 , 221);
+        public static (int R, int G, int B) VERY_BUSY_PATH_COLOR = (255, 0, 0);
+        public static (int R, int G, int B) OBSTACLE_COLOR = (255, 255, 255); //white
+
+        public PathFinder(XY_Point fromPoint , XY_Point toPoint , Controller.PathType pathType)
 		{
             this.fromPoint = fromPoint;
             this.toPoint = toPoint;
@@ -80,35 +86,35 @@ namespace Map_Creation_Tool.src.Model
         {
             Color curPixel = Database.Instance[row,col];
 
-            if(curPixel == Color.Red)
+            if(curPixel == Color.FromArgb(VERY_BUSY_PATH_COLOR.R, VERY_BUSY_PATH_COLOR.G, VERY_BUSY_PATH_COLOR.B))
             {
-                return pathType == PathType.FASTEST_PATH? (byte)PixelType.VERY_BUSY_PATH : (byte)PixelType.REGULAR_PATH;
+                return pathType == Controller.PathType.FASTEST_PATH? (int)PixelType.VERY_BUSY_PATH : (int)PixelType.REGULAR_PATH;
             }
-            else if (curPixel == Color.Orange)
+            else if (curPixel == Color.FromArgb(BUSY_PATH_COLOR.R, BUSY_PATH_COLOR.G, BUSY_PATH_COLOR.B))
             {
-                return pathType == PathType.FASTEST_PATH ? (byte)PixelType.BUSY_PATH : (byte)PixelType.REGULAR_PATH;
+                return pathType == Controller.PathType.FASTEST_PATH ? (int)PixelType.BUSY_PATH : (int)PixelType.REGULAR_PATH;
             }
-            else if (curPixel == Color.Gray)
+            else if (curPixel == Color.FromArgb(REGULAR_PATH_COLOR.R , REGULAR_PATH_COLOR.G, REGULAR_PATH_COLOR.B))
             {
-                return (byte)PixelType.REGULAR_PATH;
+                return (int)PixelType.REGULAR_PATH;
             }
-            else if (curPixel == Color.White)
+            else if (curPixel == Color.FromArgb(PLACE_COLOR.R, PLACE_COLOR.G, PLACE_COLOR.B))
             {
-                return (byte)PixelType.PLACE;
+                return (int)PixelType.PLACE;
             }
             else
             {
-                return (byte)PixelType.OBSTACLE;
+                return (int)PixelType.OBSTACLE;
             }
         }
 
         //Assert the boundaries and the cell is not an obstacle
         private bool isValid(int x, int y , int rows ,int cols)
         {
-            return 0 <= x && x < rows && 0 <= y && y < cols && calculateWeight(x , y) != OBSTACLE;
+            return 0 <= x && x < rows && 0 <= y && y < cols /*&& calculateWeight(x , y) != OBSTACLE && calculateWeight(x , y) != PLACE*/;
         }
 
-        public void findPath()
+        public List<XY_Point> findPath()
         {
             MessageBox.Show("Finding path...");
             //we need to confirm the colors and it's weight
@@ -116,7 +122,8 @@ namespace Map_Creation_Tool.src.Model
             int cols = Database.Instance.ImagePixelsHeight;
 
             int[,] len = new int[rows, cols];
-            Dictionary<XY_Point, XY_Point> parent = new Dictionary<XY_Point, XY_Point>();
+            //Dictionary<XY_Point, XY_Point> parent = new Dictionary<XY_Point, XY_Point>();
+            Dictionary<(int x, int y) , (int x , int y)> parent = new Dictionary<(int x, int y), (int x, int y)>();
             PriorityQueue<Node, int> pq = new PriorityQueue<Node, int>();
             bool[,] visited = new bool[rows, cols];
 
@@ -131,14 +138,14 @@ namespace Map_Creation_Tool.src.Model
 
             pq.Enqueue(new Node(fromPoint, 0, euclidean_distance(fromPoint, toPoint)), 0);
             len[fromPoint.X, fromPoint.Y] = 0;
-            parent[fromPoint] = new XY_Point(-1, -1);
-
+            parent[(fromPoint.X , fromPoint.Y)] = (-1, -1);
+            Node curNode = default;
             while (pq.Count > 0)
             {
-                Node curNode = pq.Dequeue();
+                curNode = pq.Dequeue();
 
                 //Reach the target break then build the path
-                if (curNode.point.Equals(toPoint))
+                if (curNode.point.X == toPoint.X && curNode.point.Y == toPoint.Y)
                     break;
 
                 if (visited[curNode.point.X, curNode.point.Y])
@@ -159,56 +166,59 @@ namespace Map_Creation_Tool.src.Model
 
                             XY_Point curPoint = new XY_Point(nX, nY);
                             pq.Enqueue(new Node(curPoint, newLen, euclidean_distance(curPoint, toPoint)), newLen);
-                            parent[curPoint] = curNode.point;
+                            parent[(curPoint.X, curPoint.Y)] = (curNode.point.X , curNode.point.Y);
                         }
                     }
-                    else
-                    {
-                       // MessageBox.Show("Invalid move to " + nX + " " + nY );
-                        string reason = "";
-                        if (nX < 0 || nX >= rows || nY < 0 || nY >= cols)
-                            reason = "Out of map boundaries.";
-                        else if (calculateWeight(nX, nY) == OBSTACLE)
-                            reason = "Blocked by an obstacle.";
+                    //else
+                    //{
+                    //   // MessageBox.Show("Invalid move to " + nX + " " + nY );
+                    //    string reason = "";
+                    //    if (nX < 0 || nX >= rows || nY < 0 || nY >= cols)
+                    //        reason = "Out of map boundaries.";
+                    //    else if (calculateWeight(nX, nY) == OBSTACLE)
+                    //        reason = "Blocked by an obstacle.";
         
-                        MessageBox.Show($"Invalid move to ({nX}, {nY}). Reason: {reason}");}
+                    //    MessageBox.Show($"Invalid move to ({nX}, {nY}). Reason: {reason}");}
                 }
             }
 
-            buildPath(ref parent);
+            return buildPath(ref parent , (curNode.point.X , curNode.point.Y));
            // MessageBox.Show("Path found!");
         }
 
-        public void buildPath(ref Dictionary<XY_Point , XY_Point> parent)
+        public List<XY_Point> buildPath(ref Dictionary<(int x , int y) , (int x , int y)> parent , (int x , int y) to)
         {
-            XY_Point curPoint = toPoint;
+            (int x , int y) curPoint = (to.x , to.y);
             path.Clear();
-            MessageBox.Show("starting path build from " + curPoint.X + " " + curPoint.Y + "");
-            foreach (var entry in parent)
+            MessageBox.Show($"to->{to.x}::{to.y} and toPoint->{toPoint.X}::{toPoint.Y}");
+            //MessageBox.Show("starting path build from " + curPoint.x + " " + curPoint.y + "");
+
+            //foreach (var entry in parent)
+            //{
+            //    System.Windows.MessageBox.Show(entry.Key.X + " " + entry.Key.Y + " " + entry.Value.X + " " + entry.Value.Y);    
+            //}
+            while (curPoint.x != -1 && curPoint.y != -1)
             {
-                System.Windows.MessageBox.Show(entry.Key.X + " " + entry.Key.Y + " " + entry.Value.X + " " + entry.Value.Y);    
-            }
-            while (parent.ContainsKey(curPoint)&&curPoint.X != -1 && curPoint.Y != -1)
-            {
-                path.Add(curPoint);
-                MessageBox.Show("adding " + curPoint.X + " " + curPoint.Y + "");
+                path.Add(new XY_Point(curPoint.x , curPoint.y));
+                //MessageBox.Show("adding " + curPoint.X + " " + curPoint.Y + "");
                 curPoint = parent[curPoint];
             }
             
-            if (curPoint.X == fromPoint.X )
-            {
-                path.Add(fromPoint);  // Include the starting point
-                Console.WriteLine($"Reached the start point: ({fromPoint.X}, {fromPoint.Y})");
-            }
-            else
-            {
-                Console.WriteLine("Failed to construct a valid path. Path may not exist.");
-                MessageBox.Show("Path does not exist!");
-                return;
-            } 
+            //if (curPoint.X == fromPoint.X )
+            //{
+            //    path.Add(fromPoint);  // Include the starting point
+            //    Console.WriteLine($"Reached the start point: ({fromPoint.X}, {fromPoint.Y})");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Failed to construct a valid path. Path may not exist.");
+            //    MessageBox.Show("Path does not exist!");
+            //    return;
+            //} 
 
             path.Reverse();
-            Console.WriteLine("final path count: " + path.Count + "");
+            MessageBox.Show("final path count: " + path.Count + "");
+            return path;
         }
 
     }

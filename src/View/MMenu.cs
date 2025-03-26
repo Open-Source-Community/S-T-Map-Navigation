@@ -14,7 +14,7 @@ namespace Map_Creation_Tool.src.View
 
     public partial class MMenu : Form
     {
-    const string BACKGROUND_PATH = @"D:\OSC\S&T\Map Navigator\res\Assets\firstScreen.png";
+    const string BACKGROUND_PATH = @"C:\Users\AnasElwkel\Source\Repos\S-T-Map-Navigation\res\Assets\firstScreen.png";
         private Panel buttonPanel;
         private Label titleLabel;
         private PictureBox logoBox;
@@ -29,14 +29,15 @@ namespace Map_Creation_Tool.src.View
 
         private void InitializeComponent()
         {
-           
+
             this.Text = "Map Navigator";
-            this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = FormBorderStyle.None;
+            this.Size = new Size(1920, 1080);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.KeyPreview = true;
-          
-           
-                if (File.Exists(BACKGROUND_PATH))
+
+
+            if (File.Exists(BACKGROUND_PATH))
                 {
                     this.BackgroundImage = Image.FromFile(BACKGROUND_PATH);
                     this.BackgroundImageLayout = ImageLayout.Stretch;

@@ -1,4 +1,5 @@
-﻿using Map_Creation_Tool.src.Model;
+﻿using Map_Creation_Tool.src.Controller;
+using Map_Creation_Tool.src.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,7 @@ namespace Map_Creation_Tool.src.View
 {
     public partial class ShortestPathForm : Form
     {
-        PictureBox pictureBox2= new PictureBox();
+        PictureBox pictureBox2 = new PictureBox();
         List<XY_Point> xY_Points = [
           new XY_Point(40, 40),
             new XY_Point(50, 50),
@@ -34,9 +35,9 @@ namespace Map_Creation_Tool.src.View
         {
             InitializeComponent();
             pictureBox1.Image = Database.Instance.CurMapImage;
-      pictureBox1.Click+=new EventHandler(PictureBox1_Click);
+            pictureBox1.Click += new EventHandler(PictureBox1_Click);
         }
-       // MessageBox
+        // MessageBox
         private void PictureBox1_Click(object sender, EventArgs e)
         {
             MouseEventArgs me = (MouseEventArgs)e;
@@ -45,15 +46,15 @@ namespace Map_Creation_Tool.src.View
             {
                 double scaleX = (double)pictureBox1.Image.Width / pictureBox1.Width;
                 double scaleY = (double)pictureBox1.Image.Height / pictureBox1.Height;
-                 image_x = (int)(me.X * scaleX);
-                 image_y=(int)(me.Y*scaleY);
+                image_x = (int)(me.X * scaleX);
+                image_y = (int)(me.Y * scaleY);
             }
-            
-            
+
+
             if (startpointSelected)
             {
-                endpoint =new XY_Point(image_x, image_y); 
-              //  MessageBox.Show("End Point Selected");
+                endpoint = new XY_Point(image_x, image_y);
+                //  MessageBox.Show("End Point Selected");
                 MessageBox.Show($"end Point: {endpoint.X}::{endpoint.Y}");
                 FindandDrawPath();
                 startpointSelected = false;
@@ -62,8 +63,8 @@ namespace Map_Creation_Tool.src.View
             {
                 startpoint = new XY_Point(image_x, image_y);
                 startpointSelected = true;
-             //   MessageBox.Show("Start Point Selected");
-             MessageBox.Show($"Start Point: {startpoint.X}::{startpoint.Y}");
+                //   MessageBox.Show("Start Point Selected");
+                MessageBox.Show($"Start Point: {startpoint.X}::{startpoint.Y}");
             }
 
         }
@@ -75,23 +76,27 @@ namespace Map_Creation_Tool.src.View
                 return;
             }
             // Ask the user to select the path type
-            DialogResult result = MessageBox.Show("Choose Path Type:\nYes - Fastest Path\nNo - Shortest Path", 
-                "Path Type Selection", 
-                MessageBoxButtons.YesNo, 
+            DialogResult result = MessageBox.Show("Choose Path Type:\nYes - Fastest Path\nNo - Shortest Path",
+                "Path Type Selection",
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
-            PathType selectedPathType = (result == DialogResult.Yes) ? PathType.FASTEST_PATH : PathType.SHORTEST_PATH;
-            PathFinder pathFinder = new PathFinder(startpoint, endpoint, selectedPathType);
-            pathFinder.findPath();
-          
-            if(pathFinder.Path.Count>0)
-           {
-               PathPrinter pathPrinter = new PathPrinter(pathFinder.Path); 
-               pathPrinter.printPath();
-                DrawCirclesOnImage(pathFinder.Path);
+            Controller.PathType selectedPathType = (result == DialogResult.Yes) ? Controller.PathType.FASTEST_PATH : Controller.PathType.SHORTEST_PATH;
+            //PathFinder pathFinder = new PathFinder(startpoint, endpoint, selectedPathType);
+            //pathFinder.findPath();
+
+            PathFinderController pathFinderController = new PathFinderController(startpoint.X, startpoint.Y, endpoint.X, endpoint.Y, selectedPathType);
+            List<XY_Point> path = pathFinderController.pathfinder();
+
+            if (path.Count>0)
+            {
+                PathPrinter pathPrinter = new PathPrinter(path);
+                pathPrinter.printPath();
+                DrawCirclesOnImage(path);
             }
-            else 
+            else
                 MessageBox.Show("No Path Found");
+
         }
         public void DrawCirclesOnImage(List<XY_Point> list)
         {
@@ -100,7 +105,7 @@ namespace Map_Creation_Tool.src.View
                 MessageBox.Show("No Image");
                 return;
             }
-            
+
             Bitmap updatedImage = new Bitmap(pictureBox1.Image);
             using (Graphics g = Graphics.FromImage(updatedImage))
             {
@@ -108,7 +113,7 @@ namespace Map_Creation_Tool.src.View
                 int cellSize = 20;
                 foreach (var item in list)
                 {
-                    Rectangle r = new Rectangle(item.X-cellSize/2, item.Y-cellSize/2, cellSize, cellSize);
+                    Rectangle r = new Rectangle(item.X - cellSize / 2, item.Y - cellSize / 2, cellSize, cellSize);
                     g.FillEllipse(brush, r);
                 }
             }
@@ -119,12 +124,12 @@ namespace Map_Creation_Tool.src.View
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
-            
+
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 pictureBox1.Image = new Bitmap(ofd.FileName);
-              //  Bitmap img = (Bitmap)pictureBox1.Image;
-               // pictureBox2.Image = pictureBox1.Image;
+                //  Bitmap img = (Bitmap)pictureBox1.Image;
+                // pictureBox2.Image = pictureBox1.Image;
             }
         }
         private void button2_Click(object sender, EventArgs e)
@@ -140,6 +145,11 @@ namespace Map_Creation_Tool.src.View
             this.Hide();
         }
         private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
         {
 
         }
