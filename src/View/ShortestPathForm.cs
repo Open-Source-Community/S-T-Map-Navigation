@@ -15,16 +15,6 @@ namespace Map_Creation_Tool.src.View
     public partial class ShortestPathForm : Form
     {
         PictureBox pictureBox2 = new PictureBox();
-        List<XY_Point> xY_Points = [
-          new XY_Point(40, 40),
-            new XY_Point(50, 50),
-            new XY_Point(60, 60),
-            new XY_Point(0, 0),
-            new XY_Point(10, 10),
-            new XY_Point(20, 20),
-            new XY_Point(30, 30)
-            ];
-
         private XY_Point startpoint;
         private int image_x;
         private int image_y;
@@ -110,9 +100,11 @@ namespace Map_Creation_Tool.src.View
             using (Graphics g = Graphics.FromImage(updatedImage))
             {
                 Brush brush = new SolidBrush(Color.Yellow);
-                int cellSize = 20;
+                int cellSize = 15;
+                int count = 0;
                 foreach (var item in list)
                 {
+                    count++;
                     Rectangle r = new Rectangle(item.X - cellSize / 2, item.Y - cellSize / 2, cellSize, cellSize);
                     g.FillEllipse(brush, r);
                 }
@@ -132,13 +124,10 @@ namespace Map_Creation_Tool.src.View
                 // pictureBox2.Image = pictureBox1.Image;
             }
         }
-        private void button2_Click(object sender, EventArgs e)
-        {
-            DrawCirclesOnImage(xY_Points);
-        }
+      
         private void ShortestPathForm_Load(object sender, EventArgs e)
         {
-            //DrawCirclesOnImage(xY_Points);
+           
         }
         private void roundedButton1_Click(object sender, EventArgs e)
         {

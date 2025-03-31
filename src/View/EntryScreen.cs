@@ -57,10 +57,7 @@ namespace Map_Creation_Tool.src.View
         private void BtnNavigate_Click(object sender, EventArgs e)
         {
            
-            MenuScreen menuScreen = new MenuScreen();
-            this.Hide();
-            menuScreen.ShowDialog(); // Blocks until MenuScreen is closed
-            this.Show(); // Show EntryScreen again after MenuScreen closes
+         
         }
     }
 }
