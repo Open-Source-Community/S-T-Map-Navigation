@@ -1,27 +1,35 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 using System.Drawing.Imaging;
 
 namespace Map_Creation_Tool.src.View
 {
-
     public enum ToolType : byte
     {
         Brush,
         Eraser,
         Rectangle,
-        Ellipse,
         Line,
         Fill
     }
 
-
-
     public class MapCreationForm : Form
     {
+        #region Attributes
+        private static readonly Color REGULAR_PATH_COLOR = Color.FromArgb(189, 198, 197);
+        private static readonly Color BUSY_PATH_COLOR = Color.FromArgb(162, 193, 221);
+        private static readonly Color VERY_BUSY_PATH_COLOR = Color.FromArgb(255, 0, 0);
+        private static readonly Color PLACE_COLOR = Color.FromArgb(238, 232, 232);
+        private static readonly Color OBSTACLE_COLOR = Color.FromArgb(255, 255, 255);
+
+        private readonly List<Color> exactColors = new List<Color>
+        {
+            REGULAR_PATH_COLOR,
+            BUSY_PATH_COLOR,
+            VERY_BUSY_PATH_COLOR,
+            PLACE_COLOR,
+            OBSTACLE_COLOR
+        };
+
         private const short WIDTH = 1280;
         private const short HEIGHT = 720;
 
@@ -33,13 +41,13 @@ namespace Map_Creation_Tool.src.View
         private ToolType currentTool;
         private Bitmap tempDrawing;
         private Pen previewPen;
-        //gridSnapping mode
-        private bool gridSnap;
+        private bool gridSnap; //gridSnapping mode
         private int gridSize;
-        //Undo and Redo Operations
-        private Stack<Bitmap> undoStack = new Stack<Bitmap>();
+        private Stack<Bitmap> undoStack = new Stack<Bitmap>(); //Undo and Redo Operations
         private Stack<Bitmap> redoStack = new Stack<Bitmap>();
+        #endregion
 
+        #region Initialization
         public MapCreationForm()
         {
             //Initializations of the attributes
@@ -84,12 +92,12 @@ namespace Map_Creation_Tool.src.View
             };
 
             // Color Buttons
-            AddColorButton(toolbar, "Path", Color.White);
-            AddColorButton(toolbar, "Busy", Color.FromArgb(241,216 , 167));
-            AddColorButton(toolbar, "Very Busy", Color.FromArgb(223,145,158));
-            AddColorButton(toolbar, "Place", Color.FromArgb(229 , 229 , 228));
-            AddColorButton(toolbar, "Obstacle", Color.Black);
-            
+            AddColorButton(toolbar, "Path", Color.FromArgb(255, Model.PathFinder.REGULAR_PATH_COLOR.R, Model.PathFinder.REGULAR_PATH_COLOR.G, Model.PathFinder.REGULAR_PATH_COLOR.B));
+            AddColorButton(toolbar, "Busy", Color.FromArgb(255, Model.PathFinder.BUSY_PATH_COLOR.R, Model.PathFinder.BUSY_PATH_COLOR.G, Model.PathFinder.BUSY_PATH_COLOR.B));
+            AddColorButton(toolbar, "Very Busy", Color.FromArgb(255, Model.PathFinder.VERY_BUSY_PATH_COLOR.R, Model.PathFinder.VERY_BUSY_PATH_COLOR.G, Model.PathFinder.VERY_BUSY_PATH_COLOR.B));
+            AddColorButton(toolbar, "Place", Color.FromArgb(255, Model.PathFinder.PLACE_COLOR.R, Model.PathFinder.PLACE_COLOR.G, Model.PathFinder.PLACE_COLOR.B));
+            AddColorButton(toolbar, "Obstacle", Color.FromArgb(255, Model.PathFinder.OBSTACLE_COLOR.R, Model.PathFinder.OBSTACLE_COLOR.G, Model.PathFinder.OBSTACLE_COLOR.B));
+
 
             // Tool Buttons
             AddToolButton(toolbar, "Brush", ToolType.Brush);
@@ -121,7 +129,7 @@ namespace Map_Creation_Tool.src.View
             gridCheck.CheckedChanged += (s, e) => gridSnap = gridCheck.Checked;
 
 
-            toolbar.Controls.AddRange(new Control[] { btnNew,btnLoad, btnSave, btnUndo, btnRedo, sizeTrack, gridCheck });
+            toolbar.Controls.AddRange(new Control[] { btnNew, btnLoad, btnSave, btnUndo, btnRedo, sizeTrack, gridCheck });
 
 
             // Drawing Area
@@ -141,49 +149,6 @@ namespace Map_Creation_Tool.src.View
             this.Controls.Add(toolbar);
         }
 
-        private void AddColorButton(Control parent, string text, Color color)
-        {
-            var btn = new Button
-            {
-                BackColor = color,
-                Text = text,
-                Width = 80,
-                FlatStyle = FlatStyle.Flat
-            };
-            btn.Font = new Font(btn.Font, FontStyle.Bold);
-            btn.Click += (s, e) => currentColor = color;
-            parent.Controls.Add(btn);
-        }
-
-        private void AddToolButton(Control parent, string text, ToolType tool)
-        {
-            var btn = new Button
-            {
-                Text = text,
-                Width = 80,
-                Tag = tool,
-                FlatStyle = FlatStyle.Flat
-            };
-            btn.Click += (s, e) =>
-            {
-                currentTool = tool;
-                UpdateButtonStates();
-            };
-            parent.Controls.Add(btn);
-        }
-
-        private void UpdateButtonStates()
-        {
-            foreach (Control c in this.Controls)
-            {
-                if (c is Button btn && btn.Tag is ToolType)
-                {
-                    btn.BackColor = (ToolType)btn.Tag == currentTool ?
-                        Color.SteelBlue : SystemColors.Control;
-                }
-            }
-        }
-
         private void InitializeCanvas(int width, int height)
         {
             canvas = new Bitmap(width, height);
@@ -193,7 +158,9 @@ namespace Map_Creation_Tool.src.View
             undoStack.Clear();
             redoStack.Clear();
         }
+        #endregion
 
+        #region Mouse Events
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             SaveState();
@@ -254,23 +221,42 @@ namespace Map_Creation_Tool.src.View
                 }
             }
         }
+        #endregion
 
+        #region Drawing Methods
         private void DrawFreehand(Point point)
         {
+            // Use exact color drawing with no anti-aliasing
             using (var g = Graphics.FromImage(canvas))
             {
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                using (var pen = new Pen(GetDrawingColor(), brushSize))
-                {
-                    pen.StartCap = pen.EndCap = LineCap.Round;
+                g.SmoothingMode = SmoothingMode.None;
+                Color drawColor = GetDrawingColor();
 
-                    if (startPoint.HasValue)
-                        g.DrawLine(pen, startPoint.Value, point);
-                    else
-                        g.FillEllipse(pen.Brush, point.X - brushSize / 2, point.Y - brushSize / 2, brushSize, brushSize);
+                if (currentTool == ToolType.Brush)
+                {
+                    using (var brush = new SolidBrush(drawColor))
+                    {
+                        int halfSize = brushSize / 2;
+                        g.FillRectangle(brush,
+                            point.X - halfSize,
+                            point.Y - halfSize,
+                            brushSize,
+                            brushSize);
+                    }
+                }
+                else if (currentTool == ToolType.Eraser)
+                {
+                    using (var brush = new SolidBrush(OBSTACLE_COLOR))
+                    {
+                        int halfSize = brushSize / 2;
+                        g.FillRectangle(brush,
+                            point.X - halfSize,
+                            point.Y - halfSize,
+                            brushSize,
+                            brushSize);
+                    }
                 }
             }
-            startPoint = point;
             pictureBox.Invalidate();
         }
 
@@ -289,9 +275,6 @@ namespace Map_Creation_Tool.src.View
                     case ToolType.Rectangle:
                         g.DrawRectangle(previewPen, rect);
                         break;
-                    case ToolType.Ellipse:
-                        g.DrawEllipse(previewPen, rect);
-                        break;
                     case ToolType.Line:
                         g.DrawLine(previewPen, startPoint.Value, endPoint);
                         break;
@@ -304,22 +287,20 @@ namespace Map_Creation_Tool.src.View
         {
             using (var g = Graphics.FromImage(canvas))
             {
-                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.SmoothingMode = SmoothingMode.None;
                 var rect = GetRectangle(startPoint.Value, endPoint);
+                Color drawColor = GetDrawingColor();
 
-                using (var brush = new SolidBrush(GetDrawingColor()))
-                using (var pen = new Pen(brush, brushSize))
+                using (var brush = new SolidBrush(drawColor))
                 {
                     switch (currentTool)
                     {
                         case ToolType.Rectangle:
                             g.FillRectangle(brush, rect);
                             break;
-                        case ToolType.Ellipse:
-                            g.FillEllipse(brush, rect);
-                            break;
                         case ToolType.Line:
-                            g.DrawLine(pen, startPoint.Value, endPoint);
+                            // For lines, use precise pixel drawing
+                            DrawPreciseLine(g, brush, startPoint.Value, endPoint);
                             break;
                     }
                 }
@@ -329,30 +310,50 @@ namespace Map_Creation_Tool.src.View
 
         private void FloodFill(Point point)
         {
-            var targetColor = canvas.GetPixel(point.X, point.Y);
-            if (targetColor.ToArgb() == currentColor.ToArgb()) return;
+            Color targetColor = canvas.GetPixel(point.X, point.Y);
+            Color replaceColor = GetDrawingColor();
+
+            if (targetColor.ToArgb() == replaceColor.ToArgb()) return;
 
             var stack = new Stack<Point>();
             stack.Push(point);
 
             while (stack.Count > 0)
             {
-                var p = stack.Pop();
-                if (p.X < 0 || p.X >= canvas.Width || p.Y < 0 || p.Y >= canvas.Height)
+                Point p = stack.Pop();
+                if (!IsInCanvas(p) || canvas.GetPixel(p.X, p.Y) != targetColor)
                     continue;
 
-                if (canvas.GetPixel(p.X, p.Y) == targetColor)
-                {
-                    canvas.SetPixel(p.X, p.Y, currentColor);
-                    stack.Push(new Point(p.X - 1, p.Y));
-                    stack.Push(new Point(p.X + 1, p.Y));
-                    stack.Push(new Point(p.X, p.Y - 1));
-                    stack.Push(new Point(p.X, p.Y + 1));
-                }
+                canvas.SetPixel(p.X, p.Y, replaceColor);
+                stack.Push(new Point(p.X - 1, p.Y));
+                stack.Push(new Point(p.X + 1, p.Y));
+                stack.Push(new Point(p.X, p.Y - 1));
+                stack.Push(new Point(p.X, p.Y + 1));
             }
             pictureBox.Invalidate();
         }
 
+        private void DrawPreciseLine(Graphics g, Brush brush, Point start, Point end)
+        {
+            // Bresenham's line algorithm for exact pixel placement
+            int dx = Math.Abs(end.X - start.X);
+            int dy = Math.Abs(end.Y - start.Y);
+            int sx = start.X < end.X ? 1 : -1;
+            int sy = start.Y < end.Y ? 1 : -1;
+            int err = dx - dy;
+
+            while (true)
+            {
+                g.FillRectangle(brush, start.X - brushSize / 2, start.Y - brushSize / 2, brushSize, brushSize);
+                if (start.X == end.X && start.Y == end.Y) break;
+                int e2 = 2 * err;
+                if (e2 > -dy) { err -= dy; start.X += sx; }
+                if (e2 < dx) { err += dx; start.Y += sy; }
+            }
+        }
+        #endregion
+
+        #region Stack Operations
         private void SaveState()
         {
             undoStack.Push((Bitmap)canvas.Clone());
@@ -378,6 +379,52 @@ namespace Map_Creation_Tool.src.View
                 pictureBox.Image = canvas;
             }
         }
+        #endregion
+
+        #region Another Methods
+        private void AddColorButton(Control parent, string text, Color color)
+        {
+            var btn = new Button
+            {
+                BackColor = color,
+                Text = text,
+                Width = 80,
+                FlatStyle = FlatStyle.Flat,
+                ForeColor = GetContrastColor(color)
+            };
+            btn.Font = new Font(btn.Font, FontStyle.Bold);
+            btn.Click += (s, e) => currentColor = color;
+            parent.Controls.Add(btn);
+        }
+
+        private void AddToolButton(Control parent, string text, ToolType tool)
+        {
+            var btn = new Button
+            {
+                Text = text,
+                Width = 80,
+                Tag = tool,
+                FlatStyle = FlatStyle.Flat
+            };
+            btn.Click += (s, e) =>
+            {
+                currentTool = tool;
+                UpdateButtonStates();
+            };
+            parent.Controls.Add(btn);
+        }
+
+        private void UpdateButtonStates()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is Button btn && btn.Tag is ToolType)
+                {
+                    btn.BackColor = (ToolType)btn.Tag == currentTool ?
+                        Color.SteelBlue : SystemColors.Control;
+                }
+            }
+        }
 
         private Point SnapPoint(Point p) => gridSnap ?
             new Point(p.X / gridSize * gridSize, p.Y / gridSize * gridSize) : p;
@@ -389,7 +436,19 @@ namespace Map_Creation_Tool.src.View
             Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y),
             Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y));
 
+        private bool IsInCanvas(Point p)
+        {
+            return p.X >= 0 && p.X < canvas.Width && p.Y >= 0 && p.Y < canvas.Height;
+        }
 
+        private Color GetContrastColor(Color color)
+        {
+            double luminance = (0.299 * color.R + 0.587 * color.G + 0.114 * color.B) / 255;
+            return luminance > 0.5 ? Color.Black : Color.White;
+        }
+        #endregion
+
+        #region Load and Save
         private void LoadMap(object sender, EventArgs e)
         {
             using (var openDialog = new OpenFileDialog())
@@ -398,12 +457,53 @@ namespace Map_Creation_Tool.src.View
                 openDialog.Title = "Load Map Image";
                 if (openDialog.ShowDialog() == DialogResult.OK)
                 {
-                    canvas = new Bitmap(openDialog.FileName);
-                    pictureBox.Image = canvas;
+                    using (var loaded = new Bitmap(openDialog.FileName))
+                    {
+                        canvas = QuantizeImage(loaded);
+                        pictureBox.Image = canvas;
+                    }
                 }
             }
         }
 
+        private Bitmap QuantizeImage(Bitmap source)
+        {
+            Bitmap quantized = new Bitmap(source.Width, source.Height);
+            for (int x = 0; x < source.Width; x++)
+            {
+                for (int y = 0; y < source.Height; y++)
+                {
+                    Color original = source.GetPixel(x, y);
+                    quantized.SetPixel(x, y, GetNearestExactColor(original));
+                }
+            }
+            return quantized;
+        }
+
+        private Color GetNearestExactColor(Color input)
+        {
+            Color closest = OBSTACLE_COLOR;
+            double minDistance = double.MaxValue;
+
+            foreach (Color exactColor in exactColors)
+            {
+                double distance = CalculateColorDistance(input, exactColor);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closest = exactColor;
+                }
+            }
+            return closest;
+        }
+
+        private double CalculateColorDistance(Color a, Color b)
+        {
+            return Math.Sqrt(
+                Math.Pow(a.R - b.R, 2) +
+                Math.Pow(a.G - b.G, 2) +
+                Math.Pow(a.B - b.B, 2));
+        }
         private void SaveMap(object sender, EventArgs e)
         {
             using (var saveDialog = new SaveFileDialog())
@@ -422,5 +522,7 @@ namespace Map_Creation_Tool.src.View
                 }
             }
         }
+        #endregion
+
     }
 }

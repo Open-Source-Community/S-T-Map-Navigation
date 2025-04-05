@@ -5,11 +5,110 @@ namespace Map_Creation_Tool.src.Model
     /*Contain any data that needs to be stored
      */
 
-    internal class Database
+    public class Database
     {
+        public static (int R, int G, int B) PLACE_COLOR = (238, 232, 232);
+        public static (int R, int G, int B) REGULAR_PATH_COLOR = (189, 198, 197);
+        public static (int R, int G, int B) BUSY_PATH_COLOR = (162, 193, 221);
+        public static (int R, int G, int B) VERY_BUSY_PATH_COLOR = (255, 0, 0);
+        public static (int R, int G, int B) OBSTACLE_COLOR = (255, 255, 255); //white
+        private static Cell[,] curGrid;
+
+        private static Dictionary<(int x, int y), int> placeComponentMap = new Dictionary<(int x, int y), int>();
+
+        // Maps each component ID to its boundary walkable points
+        private static Dictionary<int, List<(int x, int y)>> componentBoundaryMap = new Dictionary<int, List<(int x, int y)>>();
+
+        public List<(int x, int y)> this[int componentId]
+        {
+            get
+            {
+                if (componentBoundaryMap.ContainsKey(componentId))
+                {
+                    return componentBoundaryMap[componentId];
+                }
+                else
+                {
+                    return new List<(int x, int y)>();
+                }
+            }
+
+            set
+            {
+                if (componentBoundaryMap.ContainsKey(componentId))
+                {
+                    componentBoundaryMap[componentId] = value;
+                }
+                else
+                {
+                    componentBoundaryMap.Add(componentId, value);
+                }
+            }
+        }
+
+        public int this[(int x, int y) point]
+        {
+            get
+            {
+                if (placeComponentMap.ContainsKey(point))
+                {
+                    return placeComponentMap[point];
+                }
+                else
+                {
+                    return -1; // or some other default value
+                }
+            }
+
+            set
+            {
+                if (placeComponentMap.ContainsKey(point))
+                {
+                    placeComponentMap[point] = value;
+                }
+                else
+                {
+                    placeComponentMap.Add(point, value);
+                }
+            }
+        }
+
+
+
+
+
+        public Cell this[int x, int y]
+        {
+            get { return curGrid[x, y]; }
+        }
+
+        public int GridWidth
+        {
+            get
+            {
+                return curGrid.GetLength(0);
+            }
+        }
+
+        public int GridHeight
+        {
+            get
+            {
+                return curGrid.GetLength(1);
+            }
+        }
+
+        public Cell[,] CurGrid
+        {
+            get { return curGrid; }
+            set { curGrid = value; }
+        }
+
+
         private static Bitmap imagePixels;
         private static Image curMapImage;
-        
+
+
         public Bitmap ImagePixels
         {
             set { imagePixels = value; }
@@ -21,32 +120,7 @@ namespace Map_Creation_Tool.src.Model
             get { return curMapImage; }
         }
 
-        public int ImagePixelsWidth
-        {
-            get
-            {
-                return imagePixels.Width;
-            }
-        }
-
-        public int ImagePixelsHeight
-        {
-            get
-            {
-                return imagePixels.Height;
-            }
-        }
-
-        //indexer to get a pixel
-        public Color this[int x, int y]
-        {
-            get
-            {
-                return imagePixels.GetPixel(x , y);
-            }
-        }
-
-        public static Database Instance { get; } = new Database();   
+        public static Database Instance { get; } = new Database();
         private Database()
         {
         }
