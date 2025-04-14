@@ -1,5 +1,6 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Security.Cryptography;
 
 namespace Map_Creation_Tool.src.View
 {
@@ -9,11 +10,24 @@ namespace Map_Creation_Tool.src.View
         Eraser,
         Rectangle,
         Line,
-        Fill
+        Fill,
+        Text
     }
+
+    class MapLabel
+    {
+        public Point Position { get; set; }  // Image coordinates
+        public string Text { get; set; }
+        public Font Font { get; set; } = new Font("Arial", 8);
+        public Color Color { get; set; } = Color.Black;
+    }
+
 
     public class MapCreationForm : Form
     {
+        private List<MapLabel> labels = new List<MapLabel>();
+        private ToolType previousTool;  // To restore after text placement
+
         #region Attributes
         private static readonly Color REGULAR_PATH_COLOR = Color.FromArgb(189, 198, 197);
         private static readonly Color BUSY_PATH_COLOR = Color.FromArgb(162, 193, 221);
@@ -27,7 +41,8 @@ namespace Map_Creation_Tool.src.View
             BUSY_PATH_COLOR,
             VERY_BUSY_PATH_COLOR,
             PLACE_COLOR,
-            OBSTACLE_COLOR
+            OBSTACLE_COLOR,
+            Color.Green
         };
 
         private const short WIDTH = 1280;
@@ -97,15 +112,16 @@ namespace Map_Creation_Tool.src.View
             AddColorButton(toolbar, "Very Busy", Color.FromArgb(255, Model.PathFinder.VERY_BUSY_PATH_COLOR.R, Model.PathFinder.VERY_BUSY_PATH_COLOR.G, Model.PathFinder.VERY_BUSY_PATH_COLOR.B));
             AddColorButton(toolbar, "Place", Color.FromArgb(255, Model.PathFinder.PLACE_COLOR.R, Model.PathFinder.PLACE_COLOR.G, Model.PathFinder.PLACE_COLOR.B));
             AddColorButton(toolbar, "Obstacle", Color.FromArgb(255, Model.PathFinder.OBSTACLE_COLOR.R, Model.PathFinder.OBSTACLE_COLOR.G, Model.PathFinder.OBSTACLE_COLOR.B));
+            AddColorButton(toolbar, "Exit", Color.Green);
 
 
             // Tool Buttons
             AddToolButton(toolbar, "Brush", ToolType.Brush);
             AddToolButton(toolbar, "Eraser", ToolType.Eraser);
             AddToolButton(toolbar, "Rectangle", ToolType.Rectangle);
-            //AddToolButton(toolbar, "Ellipse", ToolType.Ellipse);
             AddToolButton(toolbar, "Line", ToolType.Line);
             AddToolButton(toolbar, "Fill", ToolType.Fill);
+            AddToolButton(toolbar, "Text", ToolType.Text);
 
             var btnNew = new Button { Text = "New", Width = 60 };
             btnNew.Click += (s, e) => InitializeCanvas(WIDTH, HEIGHT);
@@ -164,6 +180,26 @@ namespace Map_Creation_Tool.src.View
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             SaveState();
+
+            if (currentTool == ToolType.Text)
+            {
+                previousTool = currentTool;
+                var text = Microsoft.VisualBasic.Interaction.InputBox("Enter place name:", "Add Label", "");
+                if (!string.IsNullOrEmpty(text))
+                {
+                    var labelPos = e.Location;
+                    labels.Add(new MapLabel
+                    {
+                        Position = labelPos,
+                        Text = text
+                    });
+                    pictureBox.Invalidate();
+                }
+
+                currentTool = previousTool;
+                return;
+            }
+
             startPoint = SnapPoint(e.Location);
 
             if (currentTool == ToolType.Fill)
@@ -218,6 +254,14 @@ namespace Map_Creation_Tool.src.View
                         e.Graphics.DrawLine(gridPen, x, 0, x, pictureBox.Height);
                     for (int y = 0; y < pictureBox.Height; y += gridSize)
                         e.Graphics.DrawLine(gridPen, 0, y, pictureBox.Width, y);
+                }
+            }
+            foreach (var label in labels)
+            {
+                var viewPos = label.Position;
+                using (var brush = new SolidBrush(label.Color))
+                {
+                    e.Graphics.DrawString(label.Text, label.Font, brush, viewPos);
                 }
             }
         }
@@ -448,6 +492,8 @@ namespace Map_Creation_Tool.src.View
         }
         #endregion
 
+
+
         #region Load and Save
         private void LoadMap(object sender, EventArgs e)
         {
@@ -461,6 +507,30 @@ namespace Map_Creation_Tool.src.View
                     {
                         canvas = QuantizeImage(loaded);
                         pictureBox.Image = canvas;
+                    }
+                }
+            }
+            using (var openDialog = new OpenFileDialog())
+            {
+                openDialog.Filter = "Labels File|*.txt";
+                openDialog.Title = "Load Map Labels";
+                if (openDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Load labels
+                    var labelPath = Path.ChangeExtension(openDialog.FileName, ".txt");
+                    labels.Clear();
+                    if (File.Exists(labelPath))
+                    {
+                        foreach (var line in File.ReadAllLines(labelPath))
+                        {
+                            var parts = line.Split('|');
+                            var coords = parts[0].Split(',');
+                            labels.Add(new MapLabel
+                            {
+                                Position = new Point(int.Parse(coords[0]), int.Parse(coords[1])),
+                                Text = parts[1]
+                            });
+                        }
                     }
                 }
             }
@@ -517,12 +587,37 @@ namespace Map_Creation_Tool.src.View
                         ImageFormat.Jpeg : ImageFormat.Png;
 
                     canvas.Save(saveDialog.FileName, format);
-                    MessageBox.Show("Map saved successfully!", "Success",
+
+                    MessageBox.Show("Image Map saved successfully!", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+
+            using (var saveDialog = new SaveFileDialog())
+            {
+                saveDialog.Filter = "Labels File|*.txt";
+                saveDialog.Title = "Save Map Labels";
+
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Save labels
+                    var labelPath = Path.ChangeExtension(saveDialog.FileName, ".txt");
+                    using (var writer = new StreamWriter(labelPath))
+                    {
+                        foreach (var label in labels)
+                        {
+                            writer.WriteLine($"{label.Position.X},{label.Position.Y}|{label.Text}");
+                        }
+                    }
+
+                    MessageBox.Show("Labels Map saved successfully!", "Success",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
         #endregion
+
+
 
     }
 }

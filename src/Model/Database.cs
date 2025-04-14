@@ -19,6 +19,17 @@ namespace Map_Creation_Tool.src.Model
         // Maps each component ID to its boundary walkable points
         private static Dictionary<int, List<(int x, int y)>> componentBoundaryMap = new Dictionary<int, List<(int x, int y)>>();
 
+        private static Bitmap imagePixels;
+        private static Image curMapImage;
+        private static string labelsContent;
+
+        public string LabelsContent
+        {
+            get { return labelsContent; }
+            set { labelsContent = value; }
+        }
+
+
         public List<(int x, int y)> this[int componentId]
         {
             get
@@ -105,8 +116,7 @@ namespace Map_Creation_Tool.src.Model
         }
 
 
-        private static Bitmap imagePixels;
-        private static Image curMapImage;
+
 
 
         public Bitmap ImagePixels

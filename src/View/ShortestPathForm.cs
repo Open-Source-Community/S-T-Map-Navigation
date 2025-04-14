@@ -36,6 +36,7 @@ namespace Map_Creation_Tool.src.View
             InitializeComponent();
             pictureBox1.Image = Database.Instance.CurMapImage;
             pictureBox1.Click += new EventHandler(PictureBox1_Click);
+
         }
         // MessageBox
         private void PictureBox1_Click(object sender, EventArgs e)
@@ -54,8 +55,8 @@ namespace Map_Creation_Tool.src.View
             if (startpointSelected)
             {
                 endpoint = (image_x, image_y);
-                //  MessageBox.Show("End Point Selected");
-                MessageBox.Show($"end Point: {endpoint.x} :: {endpoint.y}");
+                MessageBox.Show("End Point Selected");
+                //MessageBox.Show($"end Point: {endpoint.x} :: {endpoint.y}");
                 FindandDrawPath();
                 startpointSelected = false;
             }
@@ -63,8 +64,8 @@ namespace Map_Creation_Tool.src.View
             {
                 startpoint = (image_x, image_y);
                 startpointSelected = true;
-                //   MessageBox.Show("Start Point Selected");
-                MessageBox.Show($"Start Point: {startpoint.x}::{startpoint.y}");
+                MessageBox.Show("Start Point Selected");
+                //MessageBox.Show($"Start Point: {startpoint.x}::{startpoint.y}");
             }
 
         }
@@ -85,7 +86,15 @@ namespace Map_Creation_Tool.src.View
             //PathFinder pathFinder = new PathFinder(startpoint, endpoint, selectedPathType);
             //pathFinder.findPath();
 
-            PathFinderController pathFinderController = new PathFinderController(startpoint.x, startpoint.y, endpoint.x, endpoint.y, selectedPathType);
+            PathFinderController pathFinderController = new PathFinderController();
+
+            while (!pathFinderController.validatePoints(startpoint.x, startpoint.y, endpoint.x, endpoint.y, selectedPathType))
+            {
+                MessageBox.Show("Invalid Points. Please select place or walkable point.");
+                return;
+            }
+
+
             List<(int x, int y)> path = pathFinderController.pathfinder();
 
             if (path.Count > 0)
@@ -110,12 +119,10 @@ namespace Map_Creation_Tool.src.View
             using (Graphics g = Graphics.FromImage(updatedImage))
             {
                 Brush brush = new SolidBrush(Color.Yellow);
-                int cellSize = 15;
-                int count = 0;
+                int cellSize = 20;
                 foreach (var item in list)
                 {
-                    count++;
-                    Rectangle r = new Rectangle(item.X - cellSize / 2, item.Y - cellSize / 2, cellSize, cellSize);
+                    Rectangle r = new Rectangle(item.x - cellSize / 2, item.y - cellSize / 2, cellSize, cellSize);
                     g.FillEllipse(brush, r);
                 }
             }
@@ -134,10 +141,13 @@ namespace Map_Creation_Tool.src.View
                 // pictureBox2.Image = pictureBox1.Image;
             }
         }
-      
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DrawCirclesOnImage(xY_Points);
+        }
         private void ShortestPathForm_Load(object sender, EventArgs e)
         {
-           
+            //DrawCirclesOnImage(xY_Points);
         }
         private void roundedButton1_Click(object sender, EventArgs e)
         {
