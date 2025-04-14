@@ -8,9 +8,9 @@ namespace Map_Creation_Tool.src.Model
 {
     internal class PathPrinter
     {
-        private List<XY_Point> path;
+        private List<(int x, int y)> path;
 
-        public PathPrinter(List<XY_Point> path)
+        public PathPrinter(List<(int x, int y)> path)
         {
             this.path = path;
         }
@@ -23,15 +23,6 @@ namespace Map_Creation_Tool.src.Model
                 MessageBox.Show("No path");
                 return;
             }
-
-            string pathdetails = "path has " + path.Count + " points";
-            MessageBox.Show("for each point in the path, print the X and Y coordinates, separated by a space:");
-            foreach (XY_Point point in path)
-            {
-                pathdetails += " " + point.X + " " + point.Y;
-                //Console.WriteLine("X: " + point.X + " Y: " + point.Y);
-            }
-            MessageBox.Show(pathdetails);
         }
     }
 }
