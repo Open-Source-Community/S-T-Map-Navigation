@@ -88,6 +88,7 @@ private string[] stepDescriptions = {
             logoBox = new Logo();
            
             this.Controls.Add(logoBox);
+
             backButton= new MenuButton("Back To Main Menu",0,homeIcon);
             backButton.Location = new Point(10, 20);
             backButton.Click += backButton_Click;

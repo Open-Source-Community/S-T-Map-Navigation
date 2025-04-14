@@ -16,7 +16,7 @@ namespace Map_Creation_Tool.src.View
 
     public partial class MMenu : Form
     {
-        const string BACKGROUND_PATH = @"D:\برمجة\Backend\WinFormsApp1OSC\res\Assets\firstScreen.png";
+        private string BACKGROUND_PATH = "../../../res/Assets/firstScreen.png";
         private Panel buttonPanel;
         private Label titleLabel;
         private PictureBox logoBox;
