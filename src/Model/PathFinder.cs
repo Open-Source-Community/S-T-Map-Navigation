@@ -86,6 +86,10 @@ namespace Map_Creation_Tool.src.Model
 
         public List<(int x, int y)> findPath()
         {
+            if (fromPoints.Count == 0 || toPoints.Count == 0)
+            {
+                return new List<(int x, int y)>();
+            }
             //MessageBox.Show("Finding path...");
             //we need to confirm the colors and it's weight
             int rows = Database.Instance.GridWidth;
@@ -133,7 +137,7 @@ namespace Map_Creation_Tool.src.Model
                 {
                     int nX = curNode.Position.x + dx[i];
                     int nY = curNode.Position.y + dy[i];
-                    if (isValid(nX, nY, rows, cols))
+                    if (isValid(nX, nY, rows, cols) && (Database.Instance[nX, nY].Type == CellType.Exit || Database.Instance[nX, nY].Type == CellType.Walkable))
                     {
                         int newLen = len[curNode.Position.x, curNode.Position.y] + (pathType == Controller.PathType.SHORTEST_PATH && Database.Instance[nX, nY].Type == CellType.Walkable ? 1 : Database.Instance[nX, nY].Weight);
                         if (newLen < len[nX, nY])

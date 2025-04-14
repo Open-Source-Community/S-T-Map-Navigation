@@ -56,6 +56,11 @@ namespace Map_Creation_Tool.src.Model
                         type = CellType.Obstacle;
                         weight = 255;
                     }
+                    else if (pixelColor == Color.Green)
+                    {
+                        weight = 1;
+                        type = CellType.Exit;
+                    }
                     else
                     {
                         throw new Exception($"Unknown color: {pixelColor} at ({i}, {j})");
@@ -99,7 +104,6 @@ namespace Map_Creation_Tool.src.Model
                     //gridInfo += $"[{x}, {y}]\n ";
                     componentCounter++;
                     FloodFillAndRecordComponent(grid, (x, y), componentCounter, ref componentIds);
-
                 }
             }
 
@@ -113,7 +117,7 @@ namespace Map_Creation_Tool.src.Model
         private void FloodFillAndRecordComponent(Cell[,] grid, (int x, int y) start, int componentId, ref int[,] componentIds)
         {
 
-            HashSet<(int x, int y)> WalkablePoints = new HashSet<(int x, int y)>(); //To store the nearest walkable points
+            HashSet<(int x, int y)> ExitPoints = new HashSet<(int x, int y)>(); //To store the nearest walkable points
 
             Queue<(int x, int y)> queue = new Queue<(int x, int y)>();
             queue.Enqueue(start);
@@ -129,17 +133,17 @@ namespace Map_Creation_Tool.src.Model
                 //s += $"[{current.x}, {current.y}]";
 
 
-                //Check if the boundary of this point is a walkable point
+                //Check if the boundary of this point is a Exit point
                 for (int i = 0, nx, ny; i < PathFinder.dx.Length; i++)
                 {
                     nx = current.x + PathFinder.dx[i];
                     ny = current.y + PathFinder.dy[i];
                     // Check if the neighbor is valid and not already visited
                     if (PathFinder.isValid(nx, ny, Database.Instance.GridWidth, Database.Instance.GridHeight) &&
-                        grid[nx, ny].Type == CellType.Walkable &&
-                        !WalkablePoints.Contains((nx, ny)))
+                        grid[nx, ny].Type == CellType.Exit &&
+                        !ExitPoints.Contains((nx, ny)))
                     {
-                        WalkablePoints.Add((nx, ny));
+                        ExitPoints.Add((nx, ny));
                     }
                 }
 
@@ -162,10 +166,8 @@ namespace Map_Creation_Tool.src.Model
             }
 
             //Add all nearst walkable points to the component
-            Database.Instance[componentId] = WalkablePoints.ToList();
+            Database.Instance[componentId] = ExitPoints.ToList();
         }
-
-
 
 
         public static List<Color> MapColors = new List<Color>
@@ -174,7 +176,8 @@ namespace Map_Creation_Tool.src.Model
             Color.FromArgb(255, PathFinder.PLACE_COLOR.R, PathFinder.PLACE_COLOR.G, PathFinder.PLACE_COLOR.B),    // PLACE
             Color.FromArgb(255, PathFinder.REGULAR_PATH_COLOR.R, PathFinder.REGULAR_PATH_COLOR.G, PathFinder.REGULAR_PATH_COLOR.B),    // REGULAR_PATH
             Color.FromArgb(255, PathFinder.BUSY_PATH_COLOR.R, PathFinder.BUSY_PATH_COLOR.G, PathFinder.BUSY_PATH_COLOR.B),    // BUSY_PATH
-            Color.FromArgb(255, PathFinder.VERY_BUSY_PATH_COLOR.R, PathFinder.VERY_BUSY_PATH_COLOR.G, PathFinder.VERY_BUSY_PATH_COLOR.B)        // VERY_BUSY
+            Color.FromArgb(255, PathFinder.VERY_BUSY_PATH_COLOR.R, PathFinder.VERY_BUSY_PATH_COLOR.G, PathFinder.VERY_BUSY_PATH_COLOR.B),        // VERY_BUSY
+            Color.Green, // Exit
         };
 
         // Quantize a pixel to the nearest predefined color
@@ -194,8 +197,6 @@ namespace Map_Creation_Tool.src.Model
                 Math.Pow(a.B - b.B, 2)
             );
         }
-
-
 
         ///For testing purposes
         public void ShowBitmapFromGrid(Cell[,] curGrid)
