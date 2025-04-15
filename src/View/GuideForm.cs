@@ -13,7 +13,7 @@ namespace Map_Creation_Tool.src.View
 {
     public partial class GuideForm : Form
     {
-
+        int TotalSteps;
         private string BACKGROUND_PATH ="../../../res/Assets/firstScreen.png";
         private Image homeIcon = Image.FromFile("../../../res/Assets/home.png");
         private Image rightArrowIcon = Image.FromFile("../../../res/Assets/right arrow.png");
@@ -26,7 +26,6 @@ namespace Map_Creation_Tool.src.View
         private Label stepNumberLabel;
         private Label stepDescriptionLabel;
         private int currentStep = 1;
-        private const int TotalSteps = 4;
         Panel contentPanel;
         private MenuButton nextSlideButton;
         private MenuButton previousSlideButton;
@@ -35,31 +34,56 @@ namespace Map_Creation_Tool.src.View
 
         private Image[] images = {
 
-            Image.FromFile("../../../res/Assets/guide.jpg"),
-            Image.FromFile("../../../res/Assets/guide 1.png"),
-              Image.FromFile("../../../res/Assets/guide.jpg"),
-            Image.FromFile("../../../res/Assets/guide 1.png"),
+            Image.FromFile("../../../res/Assets/guide_steps/1.png"),
+            Image.FromFile("../../../res/Assets/guide_steps/2.png"),
+            Image.FromFile("../../../res/Assets/guide_steps/3.png"),
+            Image.FromFile("../../../res/Assets/guide_steps/4.png"),
+            Image.FromFile("../../../res/Assets/guide_steps/5.png"),
+            Image.FromFile("../../../res/Assets/guide_steps/6.png"),
+            Image.FromFile("../../../res/Assets/guide_steps/7.png"),
+            Image.FromFile("../../../res/Assets/guide_steps/8.png"),
+            Image.FromFile("../../../res/Assets/guide_steps/9.png"),
+            Image.FromFile("../../../res/Assets/guide_steps/10.png"),
 
         };
-       private string[] stepTitles = {
-    "Draw or Upload Your Map",
-    "Select Start and End Points",
+
+        private string[] stepTitles = {
+    "Start Creating Your Map",
+    "Place Important Locations",
+    "Connect Places with Paths",
+    "Label Map Locations",
+    "Save the Map as Image and text",
+    "Load a Map to Navigate",
+    "Use the Right Colors (RGB)",
+    "Pick Start and End Points",
     "Choose Route Type",
-    "Visualize the Route"
+    "Visualize the Path"
 };
 
-private string[] stepDescriptions = {
-    "Start by either drawing your map using the editor or uploading a pre-existing map with specific RGB values. The system will process the uploaded map and convert it into a usable format.",
 
-    "Select two points on the map—a starting point and a destination. Click on 'Pick Points' and choose two locations on the grid to define the route.",
+        private string[] stepDescriptions = {
+    "Open the Map Drawer tool to begin building your custom navigation map from scratch or using an existing layout.",
 
-    "Decide whether you want the cheapest or fastest route. The system will calculate the optimal path based on your selection, taking into account the map details.",
+    "Add locations like rooms, exits (in green), or landmarks. These will be marked with special text labels on the map.\r\n\r\n",
 
-    "Once the route is calculated, the system will visually display it by drawing circles along the path on the screen, making it easy to follow."
+    "Draw paths connecting places. You can choose the type of path: Normal, Busy, or Very Busy.",
+
+    "Assign names or identifiers to each important place. This helps in route instructions and search.",
+
+    "Click on 'Save' to export your map as a .png and a .txt file. This saves the visual structure and colors in addition to the lables of each place.",
+    
+            "In the main app, choose either:Your saved image + text file\r\n\rOr another RGB-colored map from your device",
+
+            "If you're creating your own map image, use these RGB values.",
+
+            "Click on the map to select your start and end points. These will be used to calculate the best path.",
+"Decide the kind of route:Fastest – Less time (ignores traffic)\nShortest – Less cost (avoids busy paths)",
+            "The system draws circles along the calculated path to guide you visually from start to finish."
 };
 
         public GuideForm()
         {
+            TotalSteps = stepTitles.Length;
             InitializeComponent();
         }
         private void InitializeComponent()
@@ -152,7 +176,7 @@ private string[] stepDescriptions = {
             previousSlideButton.Height = nextSlideButton.Height = 55;
             previousSlideButton.Width = nextSlideButton.Width = 180;
             nextSlideButton.ImageAlign = ContentAlignment.MiddleRight;
-nextSlideButton.TextAlign = ContentAlignment.MiddleLeft;
+            nextSlideButton.TextAlign = ContentAlignment.MiddleLeft;
             contentPanel.Controls.Add(nextSlideButton);
 
             contentPanel.Controls.Add(previousSlideButton);

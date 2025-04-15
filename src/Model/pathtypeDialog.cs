@@ -68,7 +68,7 @@ namespace Map_Creation_Tool.src.Model
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = Properties.Resources.WhatsApp_Image_2025_04_14_at_19_45_36_eaf8b815;
+            pictureBox2.Image = Properties.Resources.logo2;
             pictureBox2.Location = new Point(26, 12);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(292, 115);

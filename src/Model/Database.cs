@@ -7,11 +7,13 @@ namespace Map_Creation_Tool.src.Model
 
     public class Database
     {
-        public static (int R, int G, int B) PLACE_COLOR = (238, 232, 232);
-        public static (int R, int G, int B) REGULAR_PATH_COLOR = (189, 198, 197);
-        public static (int R, int G, int B) BUSY_PATH_COLOR = (162, 193, 221);
-        public static (int R, int G, int B) VERY_BUSY_PATH_COLOR = (255, 0, 0);
-        public static (int R, int G, int B) OBSTACLE_COLOR = (255, 255, 255); //white
+
+        public static (int R, int G, int B) PLACE_COLOR = (238, 232, 232);       //Light Gray
+        public static (int R, int G, int B) REGULAR_PATH_COLOR = (189, 198, 197);//Light grayish cyan
+        public static (int R, int G, int B) BUSY_PATH_COLOR = (162, 193, 221);   //Light Blue
+        public static (int R, int G, int B) VERY_BUSY_PATH_COLOR = (255, 0, 0);  //Red
+        public static (int R, int G, int B) OBSTACLE_COLOR = (255, 255, 255);    //White
+
         private static Cell[,] curGrid;
 
         private static Dictionary<(int x, int y), int> placeComponentMap = new Dictionary<(int x, int y), int>();
