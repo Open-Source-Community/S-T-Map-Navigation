@@ -13,6 +13,8 @@ namespace Map_Creation_Tool.src.Model
         public static (int R, int G, int B) BUSY_PATH_COLOR = (162, 193, 221);   //Light Blue
         public static (int R, int G, int B) VERY_BUSY_PATH_COLOR = (255, 0, 0);  //Red
         public static (int R, int G, int B) OBSTACLE_COLOR = (255, 255, 255);    //White
+        public static Color EXIT_COLOR = Color.Green;    //Green
+
 
         private static Cell[,] curGrid;
 
