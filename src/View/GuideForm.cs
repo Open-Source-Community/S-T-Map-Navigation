@@ -3,7 +3,8 @@
         using System.Collections.Generic;
         using System.ComponentModel;
         using System.Data;
-        using System.Drawing;
+using System.Diagnostics;
+using System.Drawing;
         using System.Linq;
         using System.Text;
         using System.Threading.Tasks;
@@ -30,9 +31,11 @@
                 private MenuButton nextSlideButton;
                 private MenuButton previousSlideButton;
                 Label stepTitleLabel;
+        private LinkLabel documentLinkLabel;
 
 
-                private Image[] images = {
+
+        private Image[] images = {
 
                     Image.FromFile("../../../res/Assets/guide_steps/1.png"),
                     Image.FromFile("../../../res/Assets/guide_steps/2.png"),
@@ -81,9 +84,12 @@
 
             "Click on 'Save' to export your map as a .png and a .txt file. This saves the visual structure and colors in addition to the lables of each place.",
     
-                    "In the main app, choose either:Your saved image + text file\r\n\rOr another RGB-colored map from your device",
+                   
+            
+            "In the main app, choose either:Your saved image + text file\r\n\rOr another RGB-colored map from your device",
 
-                    "If you're creating your own map image, use these RGB values.",
+
+                    "If you're creating your own map image, use these RGB values, Click the button below to open the complete user guide in your browser for steps to create your own map using Adobe Photoshop.",
 
                     "Click on the map to select your start and end points. Choose a starting place that begins with a green door, and avoid white places as they are obstacles.",
 
@@ -145,10 +151,11 @@
 
                     };
 
+
                     this.Controls.Add(titleLabel);
 
 
-                    contentPanel = new Panel
+            contentPanel = new Panel
                     {
                         Size = new Size(900, 530),
                         BackColor = Color.FromArgb(100, 20, 20, 60),
@@ -234,7 +241,45 @@
 
 
 
-                }
+            documentLinkLabel = new LinkLabel
+            {
+                Text = "VIEW FULL GUIDE DOCUMENT ✓",
+                AutoSize = false,
+                Size = new Size(300, 50),  // Larger size
+                LinkColor = Color.FromArgb(255, 215, 0),  // Gold text
+                VisitedLinkColor = Color.FromArgb(255, 195, 0),  // Darker gold
+                ActiveLinkColor = Color.FromArgb(255, 235, 0),  // Brighter gold
+                Font = new Font("Stencil", 14, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleCenter,
+                BackColor = Color.FromArgb(70, 40, 100),  // Deep purple background
+                Visible = false,
+                BorderStyle = BorderStyle.FixedSingle,
+                Padding = new Padding(5)
+            };
+
+           
+
+            // Hover effects
+            documentLinkLabel.MouseEnter += (s, e) => {
+                documentLinkLabel.LinkColor = Color.FromArgb(255, 225, 50);
+                documentLinkLabel.BackColor = Color.FromArgb(90, 60, 120);
+                documentLinkLabel.Invalidate();
+            };
+            documentLinkLabel.MouseLeave += (s, e) => {
+                documentLinkLabel.LinkColor = Color.FromArgb(255, 215, 0);
+                documentLinkLabel.BackColor = Color.FromArgb(70, 40, 100);
+                documentLinkLabel.Invalidate();
+            };
+            documentLinkLabel.Click += (sender, e) =>
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "https://docs.google.com/document/d/18Q-F9xbNshrOPNwE6Rv5SKHnlwsFj-7f/edit?usp=sharing&ouid=113018692338495921139&rtpof=true&sd=true",
+                    UseShellExecute = true
+                });
+            };
+            contentPanel.Controls.Add(documentLinkLabel);
+        }
 
                 private void PreviousSlideButton_Click(object? sender, EventArgs e)
                 {
@@ -248,8 +293,12 @@
                         // disable 
                         previousSlideButton.Enabled = currentStep > 1;
                         nextSlideButton.Enabled = true; // Enable "Next" button
-                    }
-                }
+
+
+                documentLinkLabel.Visible = (currentStep == 8); // Add this line
+
+            }
+        }
 
                 private void NextSlideButton_Click(object? sender, EventArgs e)
                 {
@@ -265,9 +314,12 @@
                         nextSlideButton.Enabled = currentStep < TotalSteps;
                         previousSlideButton.Enabled = true;
 
-                    }
-         
-                }
+
+                documentLinkLabel.Visible = (currentStep == 8); // Add this line
+                
+            }
+
+        }
 
                 private void AdjustLayout()
                 {
@@ -334,10 +386,8 @@
                 e.Handled = true;
             }
         }
-    
 
-
-
+      
 
     }
 }
